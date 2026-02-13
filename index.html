@@ -12,7 +12,7 @@
 
     <script>
       tailwind.config = {
-        darkMode: 'class', // This forces manual toggling (starts in Light Mode)
+        darkMode: 'class',
       }
     </script>
 
@@ -24,7 +24,7 @@
       .glass { background: rgba(255, 255, 255, 0.3); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
       .dark .glass { background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.1); }
 
-      /* 3D Flip Cards */
+      /* Flip Cards */
       .perspective-1000 { perspective: 1000px; }
       .group:hover .flip-card-inner { transform: rotateY(180deg); }
       .flip-card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.8s; transform-style: preserve-3d; }
@@ -52,9 +52,7 @@
   <body class="bg-rose-50 text-gray-800 dark:bg-slate-900 dark:text-gray-100 transition-colors duration-500 font-sans overflow-x-hidden">
 
     <audio id="bgMusic" loop><source src="assets/myaudio.mp3" type="audio/mpeg"></audio>
-    <button id="musicBtn" class="fixed bottom-4 right-4 z-[60] bg-white/20 backdrop-blur-md p-3 rounded-full text-rose-500 shadow-xl border border-white/30 hover:scale-110 transition-all duration-300 hidden">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256"><path d="M216,40V160a56,56,0,0,1-96,0V88.66l-72,25.4V192a56,56,0,0,1-96,0V128a8,8,0,0,1,5.32-7.54l80-28.23A8,8,0,0,1,48,100V40a8,8,0,0,1,5.32-7.54l160-56.47A8,8,0,0,1,216,40ZM32,192a40,40,0,1,0,40-40A40,40,0,0,0,32,192Zm160-32a40,40,0,1,0,40-40A40,40,0,0,0,192,160ZM48,82.75V114l72-25.41V57.34Z"></path></svg>
-    </button>
+    <button id="musicBtn" class="fixed bottom-4 right-4 z-[60] bg-white/20 backdrop-blur-md p-3 rounded-full text-rose-500 shadow-xl border border-white/30 hover:scale-110 transition-all duration-300 hidden">🎵</button>
 
     <div id="proposal-overlay" class="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-pink-100 bg-cover bg-center transition-opacity duration-1000" style="background-image: url('https://images.unsplash.com/photo-1518621736915-f3b1c41bfd00?q=80&w=1920&auto=format&fit=crop');">
         <div class="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
@@ -79,7 +77,7 @@
             </button>
         </nav>
 
-        <main class="pt-24 px-4 min-h-screen flex flex-col items-center space-y-20 pb-20">
+        <main class="pt-24 px-4 min-h-screen flex flex-col items-center justify-center space-y-12">
             
             <h1 class="text-4xl md:text-6xl font-['Dancing_Script'] text-center">
                 Designing for <span class="text-rose-500">Love</span>
@@ -88,25 +86,20 @@
             <div class="relative w-full max-w-4xl h-[500px] rounded-3xl overflow-hidden shadow-2xl mb-12 group">
                 <div id="carousel-track" class="w-full h-full relative">
                     <div class="carousel-slide absolute inset-0 transition-opacity duration-1000 opacity-100">
-                        <img src="assets/NEW/IMG_20241020_101214.jpg" class="w-full h-full object-cover" alt="Couple 1">
+                        <img src="assets/NEW/IMG_20241020_101214.jpg" class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-8"><h2 class="text-white text-3xl font-['Dancing_Script']">Every moment with you...</h2></div>
                     </div>
                     <div class="carousel-slide absolute inset-0 transition-opacity duration-1000 opacity-0">
-                        <img src="assets/NEW/IMG_20241020_081215.jpg" class="w-full h-full object-cover" alt="Couple 2">
+                        <img src="assets/NEW/IMG_20241020_081215.jpg" class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-8"><h2 class="text-white text-3xl font-['Dancing_Script']">...is a beautiful memory.</h2></div>
                     </div>
                     <div class="carousel-slide absolute inset-0 transition-opacity duration-1000 opacity-0">
-                        <img src="assets/NEW/IMG_20241020_081202.jpg" class="w-full h-full object-cover" alt="Couple 3">
+                        <img src="assets/NEW/IMG_20241020_081202.jpg" class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-8"><h2 class="text-white text-3xl font-['Dancing_Script']">I love you forever.</h2></div>
                     </div>
                 </div>
                 <button id="prevBtn" class="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 backdrop-blur-md p-3 rounded-full hover:bg-white/40 transition opacity-0 group-hover:opacity-100">❮</button>
                 <button id="nextBtn" class="absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 backdrop-blur-md p-3 rounded-full hover:bg-white/40 transition opacity-0 group-hover:opacity-100">❯</button>
-                <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
-                    <div class="dot w-3 h-3 rounded-full bg-white opacity-100 cursor-pointer"></div>
-                    <div class="dot w-3 h-3 rounded-full bg-white/50 cursor-pointer"></div>
-                    <div class="dot w-3 h-3 rounded-full bg-white/50 cursor-pointer"></div>
-                </div>
             </div>
 
             <section class="w-full max-w-6xl mx-auto py-20 px-4">
@@ -135,9 +128,10 @@
                 </div>
             </section>
 
-            <section class="w-full max-w-4xl mx-auto mt-20 px-4">
+            <section id="our-story" class="w-full max-w-4xl mx-auto mt-20 px-4">
                 <h2 class="text-3xl md:text-5xl font-['Dancing_Script'] text-center text-rose-900 mb-16 reveal">Our Journey Together ✨</h2>
                 <div class="space-y-24 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-rose-300 before:to-transparent">
+                    
                     <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal">
                         <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-rose-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 absolute left-0 md:static">❤️</div>
                         <div class="w-[calc(100%-4rem)] md:w-[45%] bg-white/40 dark:bg-black/40 backdrop-blur-md p-6 rounded-2xl border border-white/30 shadow-lg ml-auto md:ml-0 md:mr-0 transition hover:scale-[1.02]">
@@ -147,6 +141,7 @@
                             <p class="text-gray-600 dark:text-gray-300 mt-2 text-sm leading-relaxed">The moment I saw you, I knew my life was about to change forever.</p>
                         </div>
                     </div>
+
                     <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal">
                         <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-rose-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 absolute left-0 md:static">💌</div>
                         <div class="w-[calc(100%-4rem)] md:w-[45%] bg-white/40 dark:bg-black/40 backdrop-blur-md p-6 rounded-2xl border border-white/30 shadow-lg ml-auto md:ml-0 md:mr-0 transition hover:scale-[1.02]">
@@ -156,11 +151,7 @@
                             <p class="text-gray-600 dark:text-gray-300 mt-2 text-sm leading-relaxed">Traveling the world feels like home when I'm walking beside you.</p>
                         </div>
                     </div>
-                </div>
-            </section>
 
-            <section class="w-full max-w-4xl mx-auto mt-20 px-4">
-                <div class="space-y-24 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-rose-300 before:to-transparent">
                     <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal">
                         <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-rose-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 absolute left-0 md:static">❤️</div>
                         <div class="w-[calc(100%-4rem)] md:w-[45%] bg-white/40 dark:bg-black/40 backdrop-blur-md p-6 rounded-2xl border border-white/30 shadow-lg ml-auto md:ml-0 md:mr-0 transition hover:scale-[1.02]">
@@ -170,6 +161,7 @@
                             <p class="text-gray-600 dark:text-gray-300 mt-2 text-sm leading-relaxed">Traveling the world is better when I'm holding your hand.</p>
                         </div>
                     </div>
+
                     <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal">
                         <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-rose-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 absolute left-0 md:static">💌</div>
                         <div class="w-[calc(100%-4rem)] md:w-[45%] bg-white/40 dark:bg-black/40 backdrop-blur-md p-6 rounded-2xl border border-white/30 shadow-lg ml-auto md:ml-0 md:mr-0 transition hover:scale-[1.02]">
@@ -179,11 +171,7 @@
                             <p class="text-gray-600 dark:text-gray-300 mt-2 text-sm leading-relaxed">Wherever we go, my favorite place is next to you.</p>
                         </div>
                     </div>
-                </div>
-            </section>
 
-             <section class="w-full max-w-4xl mx-auto mt-20 px-4">
-                <div class="space-y-24 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-rose-300 before:to-transparent">
                     <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal">
                         <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-rose-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 absolute left-0 md:static">❤️</div>
                         <div class="w-[calc(100%-4rem)] md:w-[45%] bg-white/40 dark:bg-black/40 backdrop-blur-md p-6 rounded-2xl border border-white/30 shadow-lg ml-auto md:ml-0 md:mr-0 transition hover:scale-[1.02]">
@@ -193,6 +181,7 @@
                             <p class="text-gray-600 dark:text-gray-300 mt-2 text-sm leading-relaxed">Loving you feels easy, like breathing.</p>
                         </div>
                     </div>
+
                     <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal">
                         <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-rose-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 absolute left-0 md:static">💌</div>
                         <div class="w-[calc(100%-4rem)] md:w-[45%] bg-white/40 dark:bg-black/40 backdrop-blur-md p-6 rounded-2xl border border-white/30 shadow-lg ml-auto md:ml-0 md:mr-0 transition hover:scale-[1.02]">
@@ -202,11 +191,7 @@
                             <p class="text-gray-600 dark:text-gray-300 mt-2 text-sm leading-relaxed">Seeing the world means more when I’m seeing it with you.</p>
                         </div>
                     </div>
-                </div>
-            </section>
 
-            <section class="w-full max-w-4xl mx-auto mt-20 px-4">
-                <div class="space-y-24 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-rose-300 before:to-transparent">
                     <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal">
                         <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-rose-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 absolute left-0 md:static">❤️</div>
                         <div class="w-[calc(100%-4rem)] md:w-[45%] bg-white/40 dark:bg-black/40 backdrop-blur-md p-6 rounded-2xl border border-white/30 shadow-lg ml-auto md:ml-0 md:mr-0 transition hover:scale-[1.02]">
@@ -216,6 +201,7 @@
                             <p class="text-gray-600 dark:text-gray-300 mt-2 text-sm leading-relaxed">Love isn’t about the place, it’s about who I’m with.</p>
                         </div>
                     </div>
+
                     <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal">
                         <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-rose-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 absolute left-0 md:static">💌</div>
                         <div class="w-[calc(100%-4rem)] md:w-[45%] bg-white/40 dark:bg-black/40 backdrop-blur-md p-6 rounded-2xl border border-white/30 shadow-lg ml-auto md:ml-0 md:mr-0 transition hover:scale-[1.02]">
@@ -225,11 +211,7 @@
                             <p class="text-gray-600 dark:text-gray-300 mt-2 text-sm leading-relaxed">I found my adventure the day I found you.</p>
                         </div>
                     </div>
-                </div>
-            </section>
 
-             <section class="w-full max-w-4xl mx-auto mt-20 px-4">
-                <div class="space-y-24 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-rose-300 before:to-transparent">
                     <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal">
                         <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-rose-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 absolute left-0 md:static">❤️</div>
                         <div class="w-[calc(100%-4rem)] md:w-[45%] bg-white/40 dark:bg-black/40 backdrop-blur-md p-6 rounded-2xl border border-white/30 shadow-lg ml-auto md:ml-0 md:mr-0 transition hover:scale-[1.02]">
@@ -239,6 +221,7 @@
                             <p class="text-gray-600 dark:text-gray-300 mt-2 text-sm leading-relaxed">Every story I love starts with you.</p>
                         </div>
                     </div>
+
                     <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal">
                         <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-rose-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 absolute left-0 md:static">💌</div>
                         <div class="w-[calc(100%-4rem)] md:w-[45%] bg-white/40 dark:bg-black/40 backdrop-blur-md p-6 rounded-2xl border border-white/30 shadow-lg ml-auto md:ml-0 md:mr-0 transition hover:scale-[1.02]">
@@ -248,11 +231,7 @@
                             <p class="text-gray-600 dark:text-gray-300 mt-2 text-sm leading-relaxed">I don’t chase sunsets anymore, I chase moments with you.</p>
                         </div>
                     </div>
-                </div>
-            </section>
 
-             <section class="w-full max-w-4xl mx-auto mt-20 px-4">
-                <div class="space-y-24 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-rose-300 before:to-transparent">
                     <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal">
                         <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-rose-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 absolute left-0 md:static">❤️</div>
                         <div class="w-[calc(100%-4rem)] md:w-[45%] bg-white/40 dark:bg-black/40 backdrop-blur-md p-6 rounded-2xl border border-white/30 shadow-lg ml-auto md:ml-0 md:mr-0 transition hover:scale-[1.02]">
@@ -262,6 +241,7 @@
                             <p class="text-gray-600 dark:text-gray-300 mt-2 text-sm leading-relaxed">Loving you feels like choosing the right path every time.</p>
                         </div>
                     </div>
+
                     <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal">
                         <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-rose-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 absolute left-0 md:static">💌</div>
                         <div class="w-[calc(100%-4rem)] md:w-[45%] bg-white/40 dark:bg-black/40 backdrop-blur-md p-6 rounded-2xl border border-white/30 shadow-lg ml-auto md:ml-0 md:mr-0 transition hover:scale-[1.02]">
@@ -271,6 +251,7 @@
                             <p class="text-gray-600 dark:text-gray-300 mt-2 text-sm leading-relaxed">I stopped searching when I found you.</p>
                         </div>
                     </div>
+
                 </div>
             </section>
 
@@ -290,7 +271,7 @@
             <section class="w-full max-w-5xl mx-auto py-10 px-4 relative group">
                 <h2 class="text-3xl md:text-5xl font-['Dancing_Script'] text-center text-rose-900 mb-12">Where it all began 🌍</h2>
                 <div class="relative w-full h-96 rounded-3xl overflow-hidden shadow-2xl border-4 border-white/50">
-                    <iframe src="https://www.google.com/maps/embed?pb=!4v1771006235634!6m8!1m7!1slqBu1DKmTYtbtC-dKMHCaw!2m2!1d11.01606955509638!2d76.96806819244154!3f14.405265773539101!4f-9.891882543011647!5f0.7820865974627469" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition duration-700"></iframe>
+                    <iframe src="https://www.google.com/maps/embed?pb=!4v1771006235634!6m8!1m7!1slqBu1DKmTYtbtC-dKMHCaw!2m2!1d11.01606955509638!2d76.96806819244154!3f14.405265773539101!4f-9.891882543011647!5f0.7820865974627469" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition duration-700"></iframe>
                     <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
                         <div class="relative flex items-center justify-center">
                             <span class="animate-ping absolute inline-flex h-16 w-16 rounded-full bg-rose-400 opacity-75"></span>
