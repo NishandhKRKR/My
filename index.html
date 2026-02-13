@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en" class="scroll-smooth">
-  <head>
+ <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>For My Valentine ❤️</title>
@@ -17,7 +17,8 @@
           extend: {
             colors: {
               love: { 50: "#fff0f3", 100: "#ffccd5", 500: "#ff4d6d", 900: "#880d1e" },
-              dark: { bg: "#0f172a", card: "#1e293b" },
+              // Renamed 'dark' to 'night' to avoid conflicts
+              night: { bg: "#0f172a", card: "#1e293b" },
             },
             fontFamily: {
               romantic: ['"Dancing Script"', "cursive"],
@@ -26,11 +27,9 @@
             animation: {
               float: "float 3s ease-in-out infinite",
               pulse: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
-              scan: "scan 1.5s linear infinite",
             },
             keyframes: {
               float: { "0%, 100%": { transform: "translateY(0)" }, "50%": { transform: "translateY(-10px)" } },
-              scan: { "0%": { top: "0%" }, "50%": { top: "95%" }, "100%": { top: "0%" } }
             },
           },
         },
@@ -41,27 +40,46 @@
       @layer utilities {
         .glass { @apply bg-white/30 backdrop-blur-md border border-white/20 shadow-xl; }
         .glass-dark { @apply dark:bg-black/30 dark:border-white/10; }
-        .perspective-1000 { perspective: 1000px; }
-        .flip-card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.8s; transform-style: preserve-3d; }
-        .flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; border-radius: 1rem; }
-        .flip-card-back { transform: rotateY(180deg); }
         .reveal { @apply opacity-0 translate-y-10 transition-all duration-1000 ease-out; }
         .reveal.active { @apply opacity-100 translate-y-0; }
       }
+    </style>
 
-      /* --- 3. CRITICAL MOBILE FIXES (ADD THIS) --- */
+    <style>
+      /* Mobile Resets */
       html, body {
         width: 100%;
-        overflow-x: hidden; /* Stops the site from zooming out */
+        overflow-x: hidden;
         margin: 0;
         padding: 0;
-        -webkit-text-size-adjust: 100%; /* Prevents text from changing size randomly */
+        -webkit-tap-highlight-color: transparent;
       }
 
-      /* Tap Highlight Fix (Removes blue box when clicking buttons on Android) */
-      * { -webkit-tap-highlight-color: transparent; }
+      /* 3D Flip Card Logic */
+      .perspective-1000 { perspective: 1000px; }
+      .group:hover .flip-card-inner { transform: rotateY(180deg); }
+      
+      .flip-card-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        transition: transform 0.8s;
+        transform-style: preserve-3d;
+      }
 
-      /* Animation Definitions */
+      .flip-card-front, .flip-card-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        border-radius: 1rem;
+      }
+
+      .flip-card-back { transform: rotateY(180deg); }
+
+      /* Quiz Shake Animation */
       @keyframes shake {
         0% { transform: translateX(0); }
         25% { transform: translateX(-5px); }
@@ -69,10 +87,20 @@
         75% { transform: translateX(-5px); }
         100% { transform: translateX(0); }
       }
+
+      /* Scanner Animation */
+      @keyframes scan {
+        0% { top: 0%; }
+        50% { top: 95%; }
+        100% { top: 0%; }
+      }
+      .animate-scan {
+        animation: scan 1.5s linear infinite;
+      }
     </style>
 </head>
   <body
-    class="bg-love-50 text-gray-800 dark:bg-dark-bg dark:text-gray-100 transition-colors duration-500 font-body"
+    class="bg-love-50 text-gray-800 dark:bg-night-bg dark:text-gray-100 transition-colors duration-500 font-body"
   >
 
   <audio id="bgMusic" loop>
