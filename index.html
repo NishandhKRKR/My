@@ -1,0 +1,1327 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>For My Valentine ❤️</title>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Inter:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              love: {
+                50: "#fff0f3",
+                100: "#ffccd5",
+                500: "#ff4d6d",
+                900: "#880d1e",
+              },
+              dark: {
+                bg: "#0f172a",
+                card: "#1e293b",
+              },
+            },
+            fontFamily: {
+              romantic: ['"Dancing Script"', "cursive"],
+              body: ['"Inter"', "sans-serif"],
+            },
+            animation: {
+              float: "float 3s ease-in-out infinite",
+            },
+            keyframes: {
+              float: {
+                "0%, 100%": { transform: "translateY(0)" },
+                "50%": { transform: "translateY(-10px)" },
+              },
+            },
+          },
+        },
+      };
+    </script>
+
+    <style type="text/tailwindcss">
+      @layer utilities {
+        .glass {
+          @apply bg-white/30 backdrop-blur-md border border-white/20 shadow-xl;
+        }
+        .glass-dark {
+          @apply dark:bg-black/30 dark:border-white/10;
+        }
+      }
+
+      /* --- FIXED 3D FLIP CSS --- */
+      .perspective-1000 {
+        perspective: 1000px;
+      }
+      
+      /* This checks: When I hover the GROUP, rotate the INNER CARD */
+      .group:hover .flip-card-inner {
+        transform: rotateY(180deg);
+      }
+
+      .flip-card-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        transition: transform 0.8s;
+        transform-style: preserve-3d;
+      }
+
+      .flip-card-front, .flip-card-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        -webkit-backface-visibility: hidden; /* Safari */
+        backface-visibility: hidden;
+        border-radius: 1rem; /* rounded-2xl */
+      }
+
+      .flip-card-back {
+        transform: rotateY(180deg);
+      }
+      /* ------------------------- */
+
+      .reveal {
+        @apply opacity-0 translate-y-10 transition-all duration-1000 ease-out;
+      }
+      .reveal.active {
+        @apply opacity-100 translate-y-0;
+      }
+
+
+      /* Quiz Shake Animation */
+      @keyframes shake {
+        0% { transform: translateX(0); }
+        25% { transform: translateX(-5px); }
+        50% { transform: translateX(5px); }
+        75% { transform: translateX(-5px); }
+        100% { transform: translateX(0); }
+      }
+
+
+      /* Scanner Animation */
+      @keyframes scan {
+        0% { top: 0%; }
+        50% { top: 95%; }
+        100% { top: 0%; }
+      }
+      .animate-scan {
+        animation: scan 1.5s linear infinite;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-love-50 text-gray-800 dark:bg-dark-bg dark:text-gray-100 transition-colors duration-500 font-body"
+  >
+
+  <audio id="bgMusic" loop>
+        <source src="assets/myaudio.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <button id="musicBtn" class="fixed bottom-4 right-4 z-[60] bg-white/20 backdrop-blur-md p-3 rounded-full text-love-500 shadow-xl border border-white/30 hover:scale-110 transition-all duration-300 hidden">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256"><path d="M216,40V160a56,56,0,0,1-96,0V88.66l-72,25.4V192a56,56,0,0,1-96,0V128a8,8,0,0,1,5.32-7.54l80-28.23A8,8,0,0,1,48,100V40a8,8,0,0,1,5.32-7.54l160-56.47A8,8,0,0,1,216,40ZM32,192a40,40,0,1,0,40-40A40,40,0,0,0,32,192Zm160-32a40,40,0,1,0,40-40A40,40,0,0,0,192,160ZM48,82.75V114l72-25.41V57.34Z"></path></svg>
+    </button>
+  
+  <div id="proposal-overlay" class="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-pink-100 bg-cover bg-center transition-opacity duration-1000" style="background-image: url('https://images.unsplash.com/photo-1518621736915-f3b1c41bfd00?q=80&w=1920&auto=format&fit=crop');">
+    <div class="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
+    <div class="relative z-10 text-center p-6">
+        <h1 class="text-5xl md:text-7xl font-romantic text-white mb-8 drop-shadow-lg animate-bounce">
+            Will you marry me? 💍
+        </h1>
+        <div class="flex items-center justify-center gap-8 h-32 w-full max-w-md mx-auto">
+            <button id="yesBtn" class="px-8 py-3 bg-green-500 hover:bg-green-600 text-white font-bold rounded-full text-xl shadow-lg transform transition hover:scale-110">
+                YES! 😍
+            </button>
+            <button id="noBtn" class="px-8 py-3 bg-red-500 text-white font-bold rounded-full text-xl shadow-lg transition-all duration-100 ease-out">
+                No 😢
+            </button>
+        </div>
+    </div>
+  </div>
+
+  <div id="main-content" class="hidden opacity-0 transition-opacity duration-1000">
+    
+    <nav class="fixed w-full z-50 top-0 start-0 glass glass-dark px-6 py-4 flex justify-between items-center transition-all duration-300">
+      <div class="text-2xl font-romantic font-bold text-love-500 animate-pulse">
+        NISHANDH ❤️ <span id="herName">KOKILA</span>
+      </div>
+      <button id="themeToggle" class="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition">
+        <svg id="sunIcon" class="hidden w-6 h-6 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+        <svg id="moonIcon" class="block w-6 h-6 text-love-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+      </button>
+    </nav> 
+
+
+
+    <main class="pt-24 px-4 min-h-screen flex flex-col items-center justify-center space-y-12">
+
+         <h1 class="text-4xl md:text-6xl font-romantic text-center">
+            Designing for <span class="text-love-500">Love</span>
+        </h1>
+        
+        <div class="relative w-full max-w-4xl h-[500px] rounded-3xl overflow-hidden shadow-2xl mb-12 group">
+            <div id="carousel-track" class="w-full h-full relative">
+                <div class="carousel-slide absolute inset-0 transition-opacity duration-1000 opacity-100">
+                    <img src="assets/NEW/IMG_20241020_101214.jpg" class="w-full h-full object-cover" alt="Couple 1">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-8"><h2 class="text-white text-3xl font-romantic">Every moment with you...</h2></div>
+                </div>
+                <div class="carousel-slide absolute inset-0 transition-opacity duration-1000 opacity-0">
+                    <img src="assets/NEW/IMG_20241020_081215.jpg" class="w-full h-full object-cover" alt="Couple 2">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-8"><h2 class="text-white text-3xl font-romantic">...is a beautiful memory.</h2></div>
+                </div>
+                <div class="carousel-slide absolute inset-0 transition-opacity duration-1000 opacity-0">
+                    <img src="assets/NEW/IMG_20241020_081202.jpg" class="w-full h-full object-cover" alt="Couple 3">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-8"><h2 class="text-white text-3xl font-romantic">I love you forever.</h2></div>
+                </div>
+            </div>
+            <button id="prevBtn" class="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 backdrop-blur-md p-3 rounded-full hover:bg-white/40 transition opacity-0 group-hover:opacity-100">❮</button>
+            <button id="nextBtn" class="absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 backdrop-blur-md p-3 rounded-full hover:bg-white/40 transition opacity-0 group-hover:opacity-100">❯</button>
+            <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
+                <div class="dot w-3 h-3 rounded-full bg-white opacity-100 cursor-pointer"></div>
+                <div class="dot w-3 h-3 rounded-full bg-white/50 cursor-pointer"></div>
+                <div class="dot w-3 h-3 rounded-full bg-white/50 cursor-pointer"></div>
+            </div>
+        </div>
+
+
+
+       
+        
+        <section class="w-full max-w-6xl mx-auto py-20 px-4">
+            <h2 class="text-3xl md:text-5xl font-romantic text-center text-love-900 mb-12">
+                3 Reasons Why I Love You ❤️
+               
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <div class="group h-80 w-full perspective-1000 cursor-pointer">
+                    <div class="flip-card-inner shadow-xl rounded-2xl">
+                        <div class="flip-card-front bg-white/40 backdrop-blur-md border border-white/50 flex flex-col items-center justify-center z-20">
+                            <div class="text-6xl mb-4">🥰</div>
+                            <h3 class="text-2xl font-bold text-love-500">Your Smile</h3>
+                        </div>
+                        <div class="flip-card-back bg-gradient-to-br from-love-500 to-love-900 flex items-center justify-center px-6 text-center">
+                            <p class="text-white text-lg font-medium">"It lights up my darkest days. Whenever I see you smile, I forget all my problems."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="group h-80 w-full perspective-1000 cursor-pointer">
+                    <div class="flip-card-inner shadow-xl rounded-2xl">
+                        <div class="flip-card-front bg-white/40 backdrop-blur-md border border-white/50 flex flex-col items-center justify-center z-20">
+                            <div class="text-6xl mb-4">🧠</div>
+                            <h3 class="text-2xl font-bold text-love-500">Your Mind</h3>
+                        </div>
+                        <div class="flip-card-back bg-gradient-to-br from-purple-500 to-purple-900 flex items-center justify-center px-6 text-center">
+                            <p class="text-white text-lg font-medium">"I love how you think, how you challenge me, and how you support my dreams."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="group h-80 w-full perspective-1000 cursor-pointer">
+                    <div class="flip-card-inner shadow-xl rounded-2xl">
+                        <div class="flip-card-front bg-white/40 backdrop-blur-md border border-white/50 flex flex-col items-center justify-center z-20">
+                            <div class="text-6xl mb-4">🌟</div>
+                            <h3 class="text-2xl font-bold text-love-500">Our Future</h3>
+                        </div>
+                        <div class="flip-card-back bg-gradient-to-br from-pink-500 to-orange-400 flex items-center justify-center px-6 text-center">
+                            <p class="text-white text-lg font-medium">"I can't wait to build a life with you. You are my forever."</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="our-story" class="w-full max-w-4xl mx-auto mt-20 px-4">
+            <h2 class="text-3xl md:text-5xl font-romantic text-center text-love-900 mb-16 reveal">Our Journey Together ✨</h2>
+            <div class="space-y-24 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-love-300 before:to-transparent">
+                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal">
+                    <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-love-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 absolute left-0 md:static">❤️</div>
+                    <div class="w-[calc(100%-4rem)] md:w-[45%] bg-white/40 dark:bg-black/40 backdrop-blur-md p-6 rounded-2xl border border-white/30 shadow-lg ml-auto md:ml-0 md:mr-0 transition hover:scale-[1.02]">
+                        <div class="h-48 bg-love-200 rounded-lg mb-4 overflow-hidden"><img src="assets/IMG20230705102717.jpg" alt="First Date" class="w-full h-full object-cover hover:scale-110 transition duration-700"></div>
+                        <span class="text-love-500 font-bold tracking-wider text-sm">JUL 05, 2023</span>
+                        <h3 class="text-2xl font-romantic text-gray-800 dark:text-gray-100 mt-1">The First Date</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mt-2 text-sm leading-relaxed">The moment I saw you, I knew my life was about to change forever.</p>
+                    </div>
+                </div>
+                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal">
+                    <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-love-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 absolute left-0 md:static">💌</div>
+                    <div class="w-[calc(100%-4rem)] md:w-[45%] bg-white/40 dark:bg-black/40 backdrop-blur-md p-6 rounded-2xl border border-white/30 shadow-lg ml-auto md:ml-0 md:mr-0 transition hover:scale-[1.02]">
+                        <div class="h-48 bg-love-200 rounded-lg mb-4 overflow-hidden"><img src="assets/IMG_0337.jpg" alt="First Trip" class="w-full h-full object-cover hover:scale-110 transition duration-700"></div>
+                        <span class="text-love-500 font-bold tracking-wider text-sm">OCT 19, 2024</span>
+                        <h3 class="text-2xl font-romantic text-gray-800 dark:text-gray-100 mt-1">Our First Trip</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mt-2 text-sm leading-relaxed">Traveling the world feels like home when Im walking beside you..</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+          <section id="our-story" class="w-full max-w-4xl mx-auto mt-20 px-4">
+            
+            <div class="space-y-24 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-love-300 before:to-transparent">
+                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal">
+                    <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-love-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 absolute left-0 md:static">❤️</div>
+                    <div class="w-[calc(100%-4rem)] md:w-[45%] bg-white/40 dark:bg-black/40 backdrop-blur-md p-6 rounded-2xl border border-white/30 shadow-lg ml-auto md:ml-0 md:mr-0 transition hover:scale-[1.02]">
+                        <div class="h-48 bg-love-200 rounded-lg mb-4 overflow-hidden"><img src="assets/IMG_0341.jpg" alt="First Date" class="w-full h-full object-cover hover:scale-110 transition duration-700"></div>
+                        <span class="text-love-500 font-bold tracking-wider text-sm">JUL 05, 2023</span>
+                        <h3 class="text-2xl font-romantic text-gray-800 dark:text-gray-100 mt-1">Holding</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mt-2 text-sm leading-relaxed">Traveling the world is better when I'm holding your hand.</p>
+                    </div>
+                </div>
+                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal">
+                    <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-love-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 absolute left-0 md:static">💌</div>
+                    <div class="w-[calc(100%-4rem)] md:w-[45%] bg-white/40 dark:bg-black/40 backdrop-blur-md p-6 rounded-2xl border border-white/30 shadow-lg ml-auto md:ml-0 md:mr-0 transition hover:scale-[1.02]">
+                        <div class="h-48 bg-love-200 rounded-lg mb-4 overflow-hidden"><img src="assets/IMG_0356.jpg" alt="First Trip" class="w-full h-full object-cover hover:scale-110 transition duration-700"></div>
+                        <span class="text-love-500 font-bold tracking-wider text-sm">DEC 25, 2024</span>
+                        <h3 class="text-2xl font-romantic text-gray-800 dark:text-gray-100 mt-1">Favorite</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mt-2 text-sm leading-relaxed">Wherever we go, my favorite place is next to you.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+          <section id="our-story" class="w-full max-w-4xl mx-auto mt-20 px-4">
+           
+            <div class="space-y-24 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-love-300 before:to-transparent">
+                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal">
+                    <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-love-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 absolute left-0 md:static">❤️</div>
+                    <div class="w-[calc(100%-4rem)] md:w-[45%] bg-white/40 dark:bg-black/40 backdrop-blur-md p-6 rounded-2xl border border-white/30 shadow-lg ml-auto md:ml-0 md:mr-0 transition hover:scale-[1.02]">
+                        <div class="h-48 bg-love-200 rounded-lg mb-4 overflow-hidden"><img src="assets/NEW/IMG_20241019_174947.jpg" alt="First Date" class="w-full h-full object-cover hover:scale-110 transition duration-700"></div>
+                        <span class="text-love-500 font-bold tracking-wider text-sm">FEB 14, 2024</span>
+                        <h3 class="text-2xl font-romantic text-gray-800 dark:text-gray-100 mt-1">Feels</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mt-2 text-sm leading-relaxed">Loving you feels easy, like breathing.</p>
+                    </div>
+                </div>
+                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal">
+                    <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-love-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 absolute left-0 md:static">💌</div>
+                    <div class="w-[calc(100%-4rem)] md:w-[45%] bg-white/40 dark:bg-black/40 backdrop-blur-md p-6 rounded-2xl border border-white/30 shadow-lg ml-auto md:ml-0 md:mr-0 transition hover:scale-[1.02]">
+                        <div class="h-48 bg-love-200 rounded-lg mb-4 overflow-hidden"><img src="assets/NEW/IMG_20241020_081202.jpg" alt="First Trip" class="w-full h-full object-cover hover:scale-110 transition duration-700"></div>
+                        <span class="text-love-500 font-bold tracking-wider text-sm">DEC 25, 2024</span>
+                        <h3 class="text-2xl font-romantic text-gray-800 dark:text-gray-100 mt-1">World</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mt-2 text-sm leading-relaxed">Seeing the world means more when I’m seeing it with you.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+          <section id="our-story" class="w-full max-w-4xl mx-auto mt-20 px-4">
+            
+            <div class="space-y-24 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-love-300 before:to-transparent">
+                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal">
+                    <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-love-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 absolute left-0 md:static">❤️</div>
+                    <div class="w-[calc(100%-4rem)] md:w-[45%] bg-white/40 dark:bg-black/40 backdrop-blur-md p-6 rounded-2xl border border-white/30 shadow-lg ml-auto md:ml-0 md:mr-0 transition hover:scale-[1.02]">
+                        <div class="h-48 bg-love-200 rounded-lg mb-4 overflow-hidden"><img src="assets/NEW/IMG_20241020_081215.jpg" alt="First Date" class="w-full h-full object-cover hover:scale-110 transition duration-700"></div>
+                        <span class="text-love-500 font-bold tracking-wider text-sm">FEB 14, 2024</span>
+                        <h3 class="text-2xl font-romantic text-gray-800 dark:text-gray-100 mt-1">Love</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mt-2 text-sm leading-relaxed">Love isn’t about the place, it’s about who I’m with.</p>
+                    </div>
+                </div>
+                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal">
+                    <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-love-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 absolute left-0 md:static">💌</div>
+                    <div class="w-[calc(100%-4rem)] md:w-[45%] bg-white/40 dark:bg-black/40 backdrop-blur-md p-6 rounded-2xl border border-white/30 shadow-lg ml-auto md:ml-0 md:mr-0 transition hover:scale-[1.02]">
+                        <div class="h-48 bg-love-200 rounded-lg mb-4 overflow-hidden"><img src="assets/NEW/IMG_20241020_085601.jpg" alt="First Trip" class="w-full h-full object-cover hover:scale-110 transition duration-700"></div>
+                        <span class="text-love-500 font-bold tracking-wider text-sm">DEC 25, 2024</span>
+                        <h3 class="text-2xl font-romantic text-gray-800 dark:text-gray-100 mt-1">Adventure</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mt-2 text-sm leading-relaxed">I found my adventure the day I found you.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+          <section id="our-story" class="w-full max-w-4xl mx-auto mt-20 px-4">
+           
+            <div class="space-y-24 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-love-300 before:to-transparent">
+                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal">
+                    <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-love-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 absolute left-0 md:static">❤️</div>
+                    <div class="w-[calc(100%-4rem)] md:w-[45%] bg-white/40 dark:bg-black/40 backdrop-blur-md p-6 rounded-2xl border border-white/30 shadow-lg ml-auto md:ml-0 md:mr-0 transition hover:scale-[1.02]">
+                        <div class="h-48 bg-love-200 rounded-lg mb-4 overflow-hidden"><img src="assets/NEW/IMG_20241020_100555.jpg" alt="First Date" class="w-full h-full object-cover hover:scale-110 transition duration-700"></div>
+                        <span class="text-love-500 font-bold tracking-wider text-sm">FEB 14, 2024</span>
+                        <h3 class="text-2xl font-romantic text-gray-800 dark:text-gray-100 mt-1">Story</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mt-2 text-sm leading-relaxed">Every story I love starts with you.</p>
+                    </div>
+                </div>
+                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal">
+                    <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-love-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 absolute left-0 md:static">💌</div>
+                    <div class="w-[calc(100%-4rem)] md:w-[45%] bg-white/40 dark:bg-black/40 backdrop-blur-md p-6 rounded-2xl border border-white/30 shadow-lg ml-auto md:ml-0 md:mr-0 transition hover:scale-[1.02]">
+                        <div class="h-48 bg-love-200 rounded-lg mb-4 overflow-hidden"><img src="assets/NEW/IMG_20241020_101214.jpg" alt="First Trip" class="w-full h-full object-cover hover:scale-110 transition duration-700"></div>
+                        <span class="text-love-500 font-bold tracking-wider text-sm">DEC 25, 2024</span>
+                        <h3 class="text-2xl font-romantic text-gray-800 dark:text-gray-100 mt-1">Moments</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mt-2 text-sm leading-relaxed">I don’t chase sunsets anymore, I chase moments with you.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+          <section id="our-story" class="w-full max-w-4xl mx-auto mt-20  px-4">
+           
+            <div class="space-y-24 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-love-300 before:to-transparent">
+                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal">
+                    <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-love-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 absolute left-0 md:static">❤️</div>
+                    <div class="w-[calc(100%-4rem)] md:w-[45%] bg-white/40 dark:bg-black/40 backdrop-blur-md p-6 rounded-2xl border border-white/30 shadow-lg ml-auto md:ml-0 md:mr-0 transition hover:scale-[1.02]">
+                        <div class="h-48 bg-love-200 rounded-lg mb-4 overflow-hidden"><img src="assets/NEW/IMG_20241020_132936.jpg" alt="First Date" class="w-full h-full object-cover hover:scale-110 transition duration-700"></div>
+                        <span class="text-love-500 font-bold tracking-wider text-sm">FEB 14, 2024</span>
+                        <h3 class="text-2xl font-romantic text-gray-800 dark:text-gray-100 mt-1">Baby</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mt-2 text-sm leading-relaxed">Loving you feels like choosing the right path every time.</p>
+                    </div>
+                </div>
+                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal">
+                    <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-love-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 absolute left-0 md:static">💌</div>
+                    <div class="w-[calc(100%-4rem)] md:w-[45%] bg-white/40 dark:bg-black/40 backdrop-blur-md p-6 rounded-2xl border border-white/30 shadow-lg ml-auto md:ml-0 md:mr-0 transition hover:scale-[1.02]">
+                        <div class="h-48 bg-love-200 rounded-lg mb-4 overflow-hidden"><img src="assets/Baby.jpg" alt="First Trip" class="w-full h-full object-cover hover:scale-110 transition duration-700"></div>
+                        <span class="text-love-500 font-bold tracking-wider text-sm">DEC 25, 2024</span>
+                        <h3 class="text-2xl font-romantic text-gray-800 dark:text-gray-100 mt-1">Found Gem</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mt-2 text-sm leading-relaxed">I stopped searching when I found you.</p>
+                    </div>
+                </div>
+            </div>
+        </section><br><br><br>
+
+
+        <section class="w-full max-w-4xl mx-auto text-center py-20 px-4">
+        <h2 class="text-3xl md:text-5xl font-romantic text-love-900 mb-8">
+            I have loved you for...
+        </h2>
+        
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+            <div class="bg-white/40 backdrop-blur-sm p-6 rounded-2xl border border-white/50 shadow-lg">
+                <span id="days" class="block text-4xl md:text-6xl font-bold text-love-500">0</span>
+                <span class="text-gray-600 uppercase tracking-widest text-xs">Days</span>
+            </div>
+            <div class="bg-white/40 backdrop-blur-sm p-6 rounded-2xl border border-white/50 shadow-lg">
+                <span id="hours" class="block text-4xl md:text-6xl font-bold text-love-500">0</span>
+                <span class="text-gray-600 uppercase tracking-widest text-xs">Hours</span>
+            </div>
+            <div class="bg-white/40 backdrop-blur-sm p-6 rounded-2xl border border-white/50 shadow-lg">
+                <span id="minutes" class="block text-4xl md:text-6xl font-bold text-love-500">0</span>
+                <span class="text-gray-600 uppercase tracking-widest text-xs">Minutes</span>
+            </div>
+            <div class="bg-white/40 backdrop-blur-sm p-6 rounded-2xl border border-white/50 shadow-lg">
+                <span id="seconds" class="block text-4xl md:text-6xl font-bold text-love-500">0</span>
+                <span class="text-gray-600 uppercase tracking-widest text-xs">Seconds</span>
+            </div>
+        </div>
+        <p class="mt-4 text-gray-500 font-body text-sm">...and counting every heartbeat.</p>
+    </section>
+
+    <section class="w-full max-w-5xl mx-auto py-10 px-4 relative group">
+        <h2 class="text-3xl md:text-5xl font-romantic text-center text-love-900 mb-12">
+            Where it all began 🌍
+        </h2>
+        
+        <div class="relative w-full h-96 rounded-3xl overflow-hidden shadow-2xl border-4 border-white/50">
+           
+
+            <iframe src="https://www.google.com/maps/embed?pb=!4v1771006235634!6m8!1m7!1slqBu1DKmTYtbtC-dKMHCaw!2m2!1d11.01606955509638!2d76.96806819244154!3f14.405265773539101!4f-9.891882543011647!5f0.7820865974627469" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition duration-700" alt="Map Location"></iframe>
+           
+            
+            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
+                <div class="relative flex items-center justify-center">
+                    <span class="animate-ping absolute inline-flex h-16 w-16 rounded-full bg-love-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-8 w-8 bg-love-600 border-4 border-white shadow-xl"></span>
+                </div>
+                <div class="mt-4 bg-white/90 backdrop-blur-md px-4 py-2 rounded-xl shadow-lg transform transition group-hover:scale-110">
+                    <p class="font-bold text-love-900 text-sm">Our Favorite Spot ❤️</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="w-full max-w-3xl mx-auto py-20 px-6">
+        <div class="bg-white/60 dark:bg-black/40 backdrop-blur-md p-8 md:p-12 rounded-3xl shadow-xl border border-white/40 relative overflow-hidden">
+            
+            <div class="absolute top-4 right-4 text-4xl opacity-20 rotate-12">🪶</div>
+
+            <h2 class="text-3xl font-romantic text-love-900 mb-6">My Promise to You</h2>
+            
+            <div class="min-h-[150px]">
+                <p id="typewriter-text" class="text-lg md:text-xl font-body text-gray-700 dark:text-gray-200 leading-relaxed">
+                    </p>
+                <span class="inline-block w-1 h-6 bg-love-500 animate-pulse ml-1 align-middle"></span>
+            </div>
+            
+            <div class="mt-8 text-right">
+                <p class="font-romantic text-2xl text-love-600">- Forever Yours, Nishandh</p>
+            </div>
+        </div>
+    </section>
+
+
+
+    
+    <section class="w-full max-w-4xl mx-auto px-4 mt-8 mb-16 transform hover:scale-[1.02] transition duration-500">
+    <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl overflow-hidden border-2 border-love-500 relative">
+        
+        <div class="bg-love-500 p-4 text-white text-center font-bold tracking-widest uppercase">
+            Official Ticket to Happiness ❤️
+        </div>
+        
+        <div class="p-6 md:p-10 flex flex-col md:flex-row justify-between items-center space-y-8 md:space-y-0">
+            
+            <div class="text-center">
+                <div class="text-5xl mb-2">🌊</div>
+                <h3 class="text-2xl font-bold text-gray-800 dark:text-white tracking-wide">KANYAKUMARI</h3>
+                <p class="text-love-500 font-semibold">Feb 27, 2026</p>
+                <p class="text-xs text-gray-400 mt-1">Starting the Journey</p>
+            </div>
+
+            <div class="flex-1 px-4 md:px-12 w-full flex flex-col items-center">
+                <div class="text-love-500 font-romantic text-2xl mb-2">Breaking the Distance</div>
+                
+                <div class="w-full h-1 bg-gray-300 rounded-full relative mt-2">
+                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 animate-bounce text-3xl">
+                        🚂
+                    </div>
+                </div>
+                
+                <p class="text-xs text-love-500 mt-4 font-bold animate-pulse tracking-widest uppercase">
+                    IN TRANSIT TO LOVE
+                </p>
+            </div>
+
+            <div class="text-center">
+                <div class="text-5xl mb-2">⛰️</div>
+                <h3 class="text-2xl font-bold text-gray-800 dark:text-white tracking-wide">COIMBATORE</h3>
+                <p class="text-love-500 font-semibold">Feb 28, 2026</p>
+                <p class="text-xs text-gray-400 mt-1">Meeting My Soulmate</p>
+            </div>
+        </div>
+
+        <div class="bg-gray-50 dark:bg-gray-900/50 p-6 text-center border-t border-dashed border-gray-300">
+            <p class="text-sm text-gray-500 uppercase mb-3 tracking-widest">Time remaining until we meet:</p>
+            
+            <div class="flex justify-center items-center space-x-4 md:space-x-8 font-mono text-3xl md:text-4xl font-bold text-love-600">
+                <div class="flex flex-col">
+                    <span id="meet-days">00</span>
+                    <span class="text-xs font-sans text-gray-400 font-normal">DAYS</span>
+                </div>
+                <span class="text-gray-300">:</span>
+                <div class="flex flex-col">
+                    <span id="meet-hours">00</span>
+                    <span class="text-xs font-sans text-gray-400 font-normal">HRS</span>
+                </div>
+                <span class="text-gray-300">:</span>
+                <div class="flex flex-col">
+                    <span id="meet-minutes">00</span>
+                    <span class="text-xs font-sans text-gray-400 font-normal">MIN</span>
+                </div>
+                <span class="text-gray-300">:</span>
+                <div class="flex flex-col">
+                    <span id="meet-seconds">00</span>
+                    <span class="text-xs font-sans text-gray-400 font-normal">SEC</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section><br><br><br>
+
+
+
+
+
+<section class="w-full py-20 px-4 text-center bg-gradient-to-b from-transparent to-love-50/50">
+    
+    <div class="relative z-10">
+        <h2 class="text-2xl font-romantic text-love-900 mb-6">
+            I wrote something for you...
+        </h2>
+        
+        <button onclick="openLetter()" class="group relative inline-block transition-transform hover:scale-110 duration-300">
+            <div class="text-9xl drop-shadow-2xl filter animate-float cursor-pointer">
+                💌
+            </div>
+            
+            <div class="absolute inset-0 bg-love-400 rounded-full opacity-20 blur-xl animate-pulse -z-10 group-hover:opacity-40 transition"></div>
+            
+            <p class="text-xs text-love-600 mt-4 font-bold tracking-widest uppercase opacity-0 group-hover:opacity-100 transition-opacity">
+                Click to Open
+            </p>
+        </button>
+    </div>
+
+    <div id="letter-modal" class="fixed inset-0 z-[80] flex items-center justify-center bg-black/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-700">
+        
+        <div id="letter-content" class="bg-[#fffdf5] w-11/12 max-w-lg p-10 md:p-14 rounded-sm shadow-2xl relative transform scale-0 transition-transform duration-700 border border-gray-200"
+             style="box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);">
+            
+            <div class="absolute -top-3 left-1/2 -translate-x-1/2 w-24 h-6 bg-love-200/50 transform -rotate-1"></div>
+            
+            <button onclick="closeLetter()" class="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-2xl">&times;</button>
+            
+            <div class="space-y-6 text-center">
+                <p class="font-sans text-xs text-gray-400 uppercase tracking-widest">Feb 28, 2026 • Kanyakumari</p>
+                
+                <h3 class="text-3xl font-romantic text-love-600">My Dearest Kokila,</h3>
+                
+                <p class="font-romantic text-xl md:text-2xl text-gray-800 leading-relaxed">
+                    "Distance is just a test to see how far love can travel. <br><br>
+                    I am counting every second until I leave the ocean of <b>Kanyakumari</b> to find my heart in <b>Coimbatore</b>."
+                </p>
+                
+                <div class="w-16 h-0.5 bg-love-200 mx-auto my-4"></div>
+                
+                <p class="font-body text-sm text-gray-600 italic">
+                    Wait for me. I'm coming home to you.
+                </p>
+
+                <div class="pt-6 font-romantic text-2xl text-love-900">
+                    With all my love,<br>Nishandh
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="w-full max-w-2xl mx-auto py-16 px-6 mb-20">
+    <h2 class="text-3xl font-romantic text-center text-love-900 mb-10">
+        How well do you know Nishandh? 🤔
+    </h2>
+
+    <div class="space-y-6">
+        
+        <div class="bg-white/60 backdrop-blur-md p-6 rounded-2xl shadow-lg border-2 border-white transform hover:scale-[1.02] transition">
+            <h3 class="text-xl font-bold text-gray-800 mb-4">1. I am travelling 450km from Kanyakumari for... 🚂</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <button onclick="checkAnswer(this, false)" class="quiz-btn bg-white py-4 rounded-xl shadow-sm hover:bg-red-100 transition font-medium text-gray-600">The Coimbatore Weather 🌦️</button>
+                <button onclick="checkAnswer(this, true)" class="quiz-btn bg-white py-4 rounded-xl shadow-sm hover:bg-green-100 transition font-bold text-love-600">To hug my world (You) ❤️</button>
+            </div>
+        </div>
+
+        <div class="bg-white/60 backdrop-blur-md p-6 rounded-2xl shadow-lg border-2 border-white transform hover:scale-[1.02] transition">
+            <h3 class="text-xl font-bold text-gray-800 mb-4">2. What is Nishandh's favorite view? 👀</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <button onclick="checkAnswer(this, true)" class="quiz-btn bg-white py-4 rounded-xl shadow-sm hover:bg-green-100 transition font-bold text-love-600">Kokila's Smile 🥰</button>
+                <button onclick="checkAnswer(this, false)" class="quiz-btn bg-white py-4 rounded-xl shadow-sm hover:bg-red-100 transition font-medium text-gray-600">The Ocean 🌊</button>
+            </div>
+        </div>
+
+        <div class="bg-white/60 backdrop-blur-md p-6 rounded-2xl shadow-lg border-2 border-white transform hover:scale-[1.02] transition">
+            <h3 class="text-xl font-bold text-gray-800 mb-4">3. What is the first thing I will do on Feb 28th? 🫂</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <button onclick="checkAnswer(this, false)" class="quiz-btn bg-white py-4 rounded-xl shadow-sm hover:bg-red-100 transition font-medium text-gray-600">Shake hands 🤝</button>
+                <button onclick="checkAnswer(this, true)" class="quiz-btn bg-white py-4 rounded-xl shadow-sm hover:bg-green-100 transition font-bold text-love-600">Hug you tight & never let go 🫂</button>
+            </div>
+        </div>
+
+    </div>
+    
+    <div id="quiz-result" class="text-center mt-8 hidden opacity-0 transition-opacity duration-500">
+        <p class="text-3xl font-romantic text-love-600 animate-bounce">
+            Correct! You are my Soulmate! 🏆
+        </p>
+    </div>
+</section>
+
+
+<section class="w-full max-w-5xl mx-auto py-20 px-6">
+    <h2 class="text-3xl font-romantic text-center text-love-900 mb-4">
+        Emergency Love Kit 🚑
+    </h2>
+    <p class="text-center text-gray-500 mb-12 text-sm">Read these only when you need them!</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <div onclick="openEnvelope('miss')" class="cursor-pointer group perspective-1000">
+            <div class="relative bg-white p-8 rounded-t-lg shadow-xl border-b-4 border-love-200 transform transition group-hover:-translate-y-2">
+                <div class="absolute top-0 left-0 w-full h-0 border-l-[150px] border-r-[150px] border-t-[100px] border-l-transparent border-r-transparent border-t-love-100/50"></div>
+                
+                <div class="text-center mt-8">
+                    <div class="text-5xl mb-4 group-hover:scale-110 transition">🥺</div>
+                    <h3 class="font-bold text-gray-700">Open When...</h3>
+                    <p class="text-love-500 font-romantic text-xl">You Miss Me</p>
+                </div>
+            </div>
+        </div>
+
+        <div onclick="openEnvelope('travel')" class="cursor-pointer group perspective-1000">
+            <div class="relative bg-white p-8 rounded-t-lg shadow-xl border-b-4 border-blue-200 transform transition group-hover:-translate-y-2">
+                <div class="absolute top-0 left-0 w-full h-0 border-l-[150px] border-r-[150px] border-t-[100px] border-l-transparent border-r-transparent border-t-blue-100/50"></div>
+                
+                <div class="text-center mt-8">
+                    <div class="text-5xl mb-4 group-hover:scale-110 transition">🧳</div>
+                    <h3 class="font-bold text-gray-700">Open On...</h3>
+                    <p class="text-blue-500 font-romantic text-xl">Feb 27th (Travel Day)</p>
+                </div>
+            </div>
+        </div>
+
+        <div onclick="openEnvelope('love')" class="cursor-pointer group perspective-1000">
+            <div class="relative bg-white p-8 rounded-t-lg shadow-xl border-b-4 border-purple-200 transform transition group-hover:-translate-y-2">
+                <div class="absolute top-0 left-0 w-full h-0 border-l-[150px] border-r-[150px] border-t-[100px] border-l-transparent border-r-transparent border-t-purple-100/50"></div>
+                
+                <div class="text-center mt-8">
+                    <div class="text-5xl mb-4 group-hover:scale-110 transition">💖</div>
+                    <h3 class="font-bold text-gray-700">Open When...</h3>
+                    <p class="text-purple-500 font-romantic text-xl">You Need a Smile</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<div id="envelope-modal" class="fixed inset-0 z-[90] flex items-center justify-center bg-black/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-500">
+    <div class="bg-white w-11/12 max-w-md p-8 rounded-2xl shadow-2xl relative transform scale-90 transition-transform duration-300" id="envelope-content">
+        <button onclick="closeEnvelope()" class="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-2xl">&times;</button>
+        
+        <div id="letter-text-container" class="text-center space-y-4">
+            </div>
+    </div>
+</div>
+
+<section class="w-full max-w-lg mx-auto py-20 px-6 text-center">
+    <h2 class="text-3xl font-romantic text-love-900 mb-2">
+        Security Check 🔒
+    </h2>
+    <p class="text-gray-500 mb-8 text-sm">Only my true soulmate can access this section.</p>
+
+    <div class="relative group">
+        <div id="scanner-container" 
+             class="w-32 h-32 mx-auto bg-white/50 border-2 border-gray-300 rounded-2xl flex items-center justify-center cursor-pointer overflow-hidden relative shadow-inner transition-all duration-300"
+             onmousedown="startScan()" onmouseup="stopScan()" onmouseleave="stopScan()"
+             ontouchstart="startScan()" ontouchend="stopScan()">
+            
+            <div id="fingerprint-icon" class="text-6xl text-gray-300 transition-colors duration-500">
+                👆
+            </div>
+
+            <div id="scan-line" class="absolute top-0 left-0 w-full h-1 bg-green-500 shadow-[0_0_15px_rgba(34,197,94,0.8)] hidden animate-scan"></div>
+        </div>
+
+        <p id="scan-status" class="mt-4 font-mono text-sm text-gray-400 font-bold h-6">
+            Hold finger to scan...
+        </p>
+    </div>
+
+    <div id="access-granted" class="hidden mt-8 transform transition-all duration-500 scale-0">
+        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+            <strong class="font-bold">Access Granted! ✅</strong>
+            <span class="block sm:inline">Identity Verified: <br><b>The Girl of My Dreams.</b></span>
+        </div>
+        <div class="text-6xl mt-4 animate-bounce">🔓❤️</div>
+    </div>
+</section>
+
+
+<section class="w-full max-w-lg mx-auto py-16 px-6 mb-24">
+    <div class="bg-[#fffdf0] p-8 md:p-12 rounded-sm shadow-2xl relative rotate-1 hover:rotate-0 transition duration-500 border border-gray-200">
+        
+        <div class="absolute -top-3 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-red-500 shadow-md border-2 border-white z-10"></div>
+        
+        <h2 class="text-2xl font-serif text-center text-gray-800 mb-6 border-b-2 border-gray-300 pb-4">
+            OFFICIAL LOVE CONTRACT
+        </h2>
+        
+        <div class="space-y-4 font-serif text-gray-700 leading-relaxed text-sm md:text-base">
+            <p>I, <b>Kokila</b>, hereby agree to the following terms with <b>Nishandh</b>:</p>
+            
+            <ul class="list-disc pl-5 space-y-2">
+                <li>To always share my ice cream (even if I said I didn't want any). 🍦</li>
+                <li>To hug you tightly every time we meet (especially on Feb 28th). 🫂</li>
+                <li>To never go to sleep angry. 🌙</li>
+                <li>To love you even when you are annoying. 😜</li>
+                <li>To be your partner in crime forever. 💍</li>
+            </ul>
+        </div>
+
+        <div id="contract-stamp" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 hidden opacity-0 transform scale-150 transition-all duration-300">
+            <div class="border-4 border-love-600 text-love-600 font-bold text-4xl p-4 rotate-[-20deg] opacity-80 rounded-lg mask-grunge">
+                ACCEPTED ❤️
+            </div>
+        </div>
+
+        <div class="mt-8 text-center">
+            <button onclick="signContract()" id="sign-btn" class="bg-gray-800 text-white px-8 py-3 rounded-full font-bold hover:bg-love-600 transition shadow-lg w-full">
+                🖊️ Click to Sign Here
+            </button>
+        </div>
+        
+        <p class="text-[10px] text-gray-400 text-center mt-4">Valid from Feb 28, 2026 to Eternity.</p>
+    </div>
+</section>
+
+
+<section class="w-full max-w-2xl mx-auto py-20 px-6">
+    <h2 class="text-3xl font-romantic text-center text-love-900 mb-8">
+        The Source Code of My Heart 👨‍💻
+    </h2>
+    
+    <div class="bg-[#1e1e1e] rounded-xl shadow-2xl overflow-hidden border border-gray-700 transform hover:scale-[1.02] transition duration-500">
+        
+        <div class="bg-[#252526] px-4 py-2 flex items-center space-x-2 border-b border-gray-700">
+            <div class="flex space-x-2 mr-4">
+                <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                <div class="w-3 h-3 rounded-full bg-green-500"></div>
+            </div>
+            <div class="bg-[#1e1e1e] text-white text-xs px-3 py-1 rounded-t-md flex items-center border-t-2 border-love-500">
+                <span class="mr-2">📝</span> love_logic.js
+            </div>
+        </div>
+
+        <div class="p-6 font-mono text-sm md:text-base leading-relaxed overflow-x-auto">
+            
+            <div class="text-gray-500 italic mb-2">
+                // Author: Nishandh (Full Stack Dev)<br>
+                // Deploying to: Kokila's Heart ❤️
+            </div>
+
+            <div class="flex">
+                <span class="text-gray-600 mr-4 select-none">1</span>
+                <div>
+                    <span class="text-purple-400">const</span> 
+                    <span class="text-blue-400">myLife</span> 
+                    <span class="text-white">=</span> 
+                    <span class="text-yellow-300">"Kanyakumari"</span>;
+                </div>
+            </div>
+
+            <div class="flex">
+                <span class="text-gray-600 mr-4 select-none">2</span>
+                <div>
+                    <span class="text-purple-400">const</span> 
+                    <span class="text-blue-400">mySoul</span> 
+                    <span class="text-white">=</span> 
+                    <span class="text-yellow-300">"Coimbatore"</span>;
+                </div>
+            </div>
+
+            <div class="flex"><span class="text-gray-600 mr-4 select-none">3</span></div>
+
+            <div class="flex">
+                <span class="text-gray-600 mr-4 select-none">4</span>
+                <div>
+                    <span class="text-purple-400">while</span> 
+                    (<span class="text-blue-400">alive</span>) {
+                </div>
+            </div>
+
+            <div class="flex">
+                <span class="text-gray-600 mr-4 select-none">5</span>
+                <div class="pl-4">
+                    <span class="text-red-400">heart</span>.<span class="text-yellow-200">beatFor</span>(<span class="text-green-400">"Kokila"</span>);
+                </div>
+            </div>
+
+            <div class="flex">
+                <span class="text-gray-600 mr-4 select-none">6</span>
+                <div class="pl-4">
+                    <span class="text-blue-400">distance</span> 
+                    <span class="text-white">=</span> 
+                    <span class="text-orange-400">450km</span>;
+                </div>
+            </div>
+
+            <div class="flex">
+                <span class="text-gray-600 mr-4 select-none">7</span>
+                <div class="pl-4">
+                    <span class="text-blue-400">happiness</span> 
+                    <span class="text-white">=</span> 
+                    <span class="text-purple-400">Infinity</span>;
+                </div>
+            </div>
+
+            <div class="flex">
+                <span class="text-gray-600 mr-4 select-none">8</span>
+                <div>}</div>
+            </div>
+            
+            <div class="flex mt-2">
+                <span class="text-gray-600 mr-4 select-none">9</span>
+                <div class="w-2 h-5 bg-love-500 animate-pulse"></div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+    </main>
+  </div> 
+
+
+  <footer class="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md py-8 text-center border-t border-love-200">
+    <p class="font-romantic text-xl text-love-900">
+        Created with ❤️ by Nishandh
+    </p>
+    <p class="text-xs text-gray-500 mt-2">
+        See you in Coimbatore | Feb 28, 2026
+    </p>
+</footer>
+<script>
+      // --- DOM ELEMENTS ---
+      const proposalOverlay = document.getElementById('proposal-overlay');
+      const mainContent = document.getElementById('main-content');
+      const yesBtn = document.getElementById('yesBtn');
+      const noBtn = document.getElementById('noBtn');
+      
+      // Music Elements
+      const bgMusic = document.getElementById('bgMusic');
+      const musicBtn = document.getElementById('musicBtn');
+
+      // 1. --- PROPOSAL & MUSIC LOGIC ---
+      yesBtn.addEventListener('click', () => {
+        
+        // A. START MUSIC 🎵
+        bgMusic.volume = 0.5; // Set volume to 50%
+        bgMusic.play().catch(error => {
+            console.log("Autoplay prevented. User interaction required first.");
+        });
+        musicBtn.classList.remove('hidden'); // Show the music button
+
+        // B. CONFETTI 🎉
+        var duration = 3 * 1000;
+        var animationEnd = Date.now() + duration;
+        var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+        function randomInRange(min, max) { return Math.random() * (max - min) + min; }
+        
+        var interval = setInterval(function() {
+          var timeLeft = animationEnd - Date.now();
+          if (timeLeft <= 0) { return clearInterval(interval); }
+          var particleCount = 50 * (timeLeft / duration);
+          confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+          confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+        }, 250);
+
+        // C. REVEAL WEBSITE
+        proposalOverlay.classList.add('opacity-0'); 
+        setTimeout(() => {
+            proposalOverlay.style.display = 'none'; 
+            mainContent.classList.remove('hidden'); 
+            setTimeout(() => {
+                mainContent.classList.remove('opacity-0');
+            }, 50);
+        }, 1000); 
+      });
+
+      // 2. --- MUSIC TOGGLE BUTTON ---
+      musicBtn.addEventListener('click', () => {
+        if (bgMusic.paused) {
+            bgMusic.play();
+            musicBtn.classList.add('animate-spin'); // Spin when playing
+            musicBtn.style.opacity = "1";
+        } else {
+            bgMusic.pause();
+            musicBtn.classList.remove('animate-spin'); // Stop spin when paused
+            musicBtn.style.opacity = "0.5";
+        }
+      });
+
+      // 3. --- RUNAWAY 'NO' BUTTON ---
+      function moveButton() {
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        const newX = Math.random() * (width - 200) + 50; 
+        const newY = Math.random() * (height - 200) + 50;
+        noBtn.style.position = 'fixed';
+        noBtn.style.left = `${newX}px`;
+        noBtn.style.top = `${newY}px`;
+      }
+      noBtn.addEventListener('mouseover', moveButton);
+      noBtn.addEventListener('touchstart', (e) => { e.preventDefault(); moveButton(); });
+
+      // 4. --- DARK MODE ---
+      const themeToggleBtn = document.getElementById("themeToggle");
+      const sunIcon = document.getElementById("sunIcon");
+      const moonIcon = document.getElementById("moonIcon");
+      const htmlElement = document.documentElement;
+
+      themeToggleBtn.addEventListener("click", () => {
+        htmlElement.classList.toggle("dark");
+        if (htmlElement.classList.contains("dark")) {
+          sunIcon.classList.remove("hidden");
+          moonIcon.classList.add("hidden");
+        } else {
+          sunIcon.classList.add("hidden");
+          moonIcon.classList.remove("hidden");
+        }
+      });
+
+      // 5. --- SCROLL REVEAL ---
+      const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+                observer.unobserve(entry.target);
+            }
+        });
+      }, { threshold: 0.1 });
+
+      document.querySelectorAll('.reveal').forEach((el) => {
+        observer.observe(el);
+      });
+
+      // 6. --- CAROUSEL ---
+      const slides = document.querySelectorAll('.carousel-slide');
+      const dots = document.querySelectorAll('.dot');
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      let currentSlide = 0;
+
+      function showSlide(index) {
+        if (index >= slides.length) currentSlide = 0;
+        else if (index < 0) currentSlide = slides.length - 1;
+        else currentSlide = index;
+        slides.forEach((slide, i) => {
+            slide.style.opacity = i === currentSlide ? '1' : '0';
+            slide.style.zIndex = i === currentSlide ? '10' : '0';
+        });
+        dots.forEach((dot, i) => {
+            dot.style.opacity = i === currentSlide ? '1' : '0.5';
+        });
+      }
+      nextBtn.addEventListener('click', () => showSlide(currentSlide + 1));
+      prevBtn.addEventListener('click', () => showSlide(currentSlide - 1));
+      setInterval(() => { showSlide(currentSlide + 1); }, 5000);
+
+
+
+// --- 1. RELATIONSHIP CLOCK LOGIC ---
+    // 👇 CHANGE THIS DATE TO WHEN YOU STARTED DATING (Year, Month-1, Day)
+    // Note: Month is 0-indexed (0 = Jan, 1 = Feb, ... 11 = Dec)
+    const startDate = new Date(2023, 0, 1); // Example: Feb 14, 2023
+
+    function updateTimer() {
+        const now = new Date();
+        const diff = now - startDate;
+
+        // Math to calculate units
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / 1000 / 60) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+
+        // Update HTML
+        document.getElementById('days').innerText = days;
+        document.getElementById('hours').innerText = hours;
+        document.getElementById('minutes').innerText = minutes;
+        document.getElementById('seconds').innerText = seconds;
+    }
+    setInterval(updateTimer, 1000); // Update every second
+    updateTimer(); // Run immediately
+
+    // --- 2. TYPEWRITER EFFECT LOGIC ---
+    const textElement = document.getElementById('typewriter-text');
+    const textToType = "I promise to love you in every moment. Through the laughter and the tears, the adventures and the quiet days. You are  my Wife, my best friend, my soulmate, and my greatest gift. I love you more than words can say.";
+    let charIndex = 0;
+    let isTyping = false;
+
+    // Use Intersection Observer to start typing when visible
+    const typewriterObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !isTyping) {
+                isTyping = true;
+                typeWriter();
+            }
+        });
+    }, { threshold: 0.5 });
+
+    typewriterObserver.observe(textElement);
+
+    function typeWriter() {
+        if (charIndex < textToType.length) {
+            textElement.innerHTML += textToType.charAt(charIndex);
+            charIndex++;
+            setTimeout(typeWriter, 50); // Adjust speed (lower = faster)
+        }
+    }
+
+// --- 🚂 MEETING COUNTDOWN LOGIC ---
+// Target Date: Feb 28, 2026 at 10:00:00 AM
+// (Year, Month is 0-indexed so 1=Feb, Day, Hour, Min, Sec)
+const meetingDate = new Date(2026, 1, 28, 10, 0, 0).getTime();
+
+const countdownInterval = setInterval(function() {
+    const now = new Date().getTime();
+    const distance = meetingDate - now;
+
+    if (distance > 0) {
+        // Calculate time units
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        // Update the HTML
+        document.getElementById("meet-days").innerText = days < 10 ? "0" + days : days;
+        document.getElementById("meet-hours").innerText = hours < 10 ? "0" + hours : hours;
+        document.getElementById("meet-minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
+        document.getElementById("meet-seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
+    } else {
+        // What happens when the countdown finishes
+        clearInterval(countdownInterval);
+        document.getElementById("meet-days").innerText = "00";
+        document.getElementById("meet-hours").innerText = "00";
+        document.getElementById("meet-minutes").innerText = "00";
+        document.getElementById("meet-seconds").innerText = "00";
+    }
+}, 1000);
+
+
+
+
+
+// --- 💌 LOVE LETTER LOGIC ---
+    const letterModal = document.getElementById('letter-modal');
+    const letterContent = document.getElementById('letter-content');
+
+    function openLetter() {
+        // Show overlay
+        letterModal.classList.remove('hidden');
+        
+        // Animate In
+        setTimeout(() => {
+            letterModal.classList.remove('opacity-0');
+            letterContent.classList.remove('scale-0');
+            letterContent.classList.add('scale-100');
+            
+            // Soft Confetti (Rose Petal style)
+            var defaults = { spread: 360, ticks: 50, gravity: 0, decay: 0.94, startVelocity: 30, shapes: ['star'], colors: ['FFE400', 'FFBD00', 'E89400', 'FFCA6C', 'FDFFB8'] };
+            
+            confetti({
+                ...defaults,
+                particleCount: 40,
+                scalar: 1.2,
+                shapes: ['circle'],
+                colors: ['#ffccd5', '#ff4d6d']
+            });
+        }, 50);
+    }
+
+    function closeLetter() {
+        // Animate Out
+        letterModal.classList.add('opacity-0');
+        letterContent.classList.remove('scale-100');
+        letterContent.classList.add('scale-0');
+        
+        setTimeout(() => {
+            letterModal.classList.add('hidden');
+        }, 700);
+    }
+
+// --- 🎮 QUIZ GAME LOGIC ---
+    let correctCount = 0;
+    
+    function checkAnswer(btn, isCorrect) {
+        // If already clicked, do nothing
+        if (btn.classList.contains('bg-green-500') || btn.classList.contains('bg-red-500')) return;
+
+        if (isCorrect) {
+            // Correct Answer Styling
+            btn.classList.remove('bg-white', 'hover:bg-green-100');
+            btn.classList.add('bg-green-500', 'text-white', 'scale-105');
+            btn.innerHTML += " ✅";
+            
+            // Celebration Confetti
+            confetti({
+                particleCount: 30,
+                spread: 50,
+                origin: { y: 0.7, x: Math.random() } // Random x position
+            });
+            
+            correctCount++;
+            
+            // Check if all 3 are correct (Logic: We need 3 correct clicks)
+            // Since Q3 has 2 correct buttons, we just check if user got "enough" right
+            if (correctCount >= 3) {
+                const result = document.getElementById('quiz-result');
+                result.classList.remove('hidden');
+                setTimeout(() => result.classList.remove('opacity-0'), 100);
+            }
+
+        } else {
+            // Wrong Answer Styling
+            btn.classList.remove('bg-white', 'hover:bg-red-100');
+            btn.classList.add('bg-red-500', 'text-white', 'animate-shake');
+            btn.innerHTML += " ❌";
+            
+            // Add Shake Animation Class
+            btn.style.animation = "shake 0.5s";
+        }
+    }
+
+// --- 📜 LOVE CONTRACT LOGIC ---
+    function signContract() {
+        const stamp = document.getElementById('contract-stamp');
+        const btn = document.getElementById('sign-btn');
+        
+        // 1. Show the Stamp
+        stamp.classList.remove('hidden');
+        setTimeout(() => {
+            stamp.classList.remove('opacity-0', 'scale-150');
+            stamp.classList.add('scale-100'); // Stamp effect
+            
+            // Play a stamp sound if you want (optional)
+        }, 50);
+
+        // 2. Change Button
+        btn.innerHTML = "Signed & Sealed! 💌";
+        btn.classList.add('bg-green-600', 'cursor-default');
+        btn.disabled = true;
+
+        // 3. Send WhatsApp Message (Wait 1.5 seconds)
+        setTimeout(() => {
+            // REPLACE '919876543210' WITH YOUR REAL NUMBER (Don't remove the '91')
+            const phoneNumber = "919487187639"; 
+            const message = "Hey Nishandh! I just signed the Love Contract on the website. I agree to be yours forever! 💍❤️";
+            
+            // Open WhatsApp
+            window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, '_blank');
+        }, 1500);
+        
+        // 4. Celebration Confetti
+        confetti({
+            particleCount: 150,
+            spread: 100,
+            origin: { y: 0.8 },
+            colors: ['#ff0000', '#000000'] // Red and Black ink colors
+        });
+    }
+// --- 📨 OPEN WHEN... LOGIC ---
+    const envModal = document.getElementById('envelope-modal');
+    const envContent = document.getElementById('envelope-content');
+    const letterContainer = document.getElementById('letter-text-container');
+
+    const letters = {
+        'miss': `
+            <div class="text-6xl mb-4">🫂</div>
+            <h3 class="text-2xl font-bold text-love-600 mb-2">I Miss You Too!</h3>
+            <p class="text-gray-600 leading-relaxed">
+                Close your eyes and take a deep breath. <br>
+                Remember that I am just one phone call away. <br>
+                This distance is temporary, but my love for you is permanent.
+                <br><br>
+                <b>See you in Coimbatore soon!</b>
+            </p>
+        `,
+        'travel': `
+            <div class="text-6xl mb-4">🚌</div>
+            <h3 class="text-2xl font-bold text-blue-600 mb-2">Safe Travels, My Love!</h3>
+            <p class="text-gray-600 leading-relaxed">
+                The journey from Kanyakumari might be long, but the destination will be worth it.
+                <br><br>
+                Don't forget your charger, drink water, and text me when you leave!
+                I am counting the hours. ⏳
+            </p>
+        `,
+        'love': `
+            <div class="text-6xl mb-4">🥰</div>
+            <h3 class="text-2xl font-bold text-purple-600 mb-2">You are Beautiful</h3>
+            <p class="text-gray-600 leading-relaxed">
+                Just in case nobody told you today: <br>
+                You are smart, you are kind, and you are the best thing that ever happened to me.
+                <br><br>
+                Keep smiling, Kokila! ❤️
+            </p>
+        `
+    };
+
+    function openEnvelope(type) {
+        // 1. Set Content
+        letterContainer.innerHTML = letters[type];
+        
+        // 2. Show Modal
+        envModal.classList.remove('hidden');
+        setTimeout(() => {
+            envModal.classList.remove('opacity-0');
+            envContent.classList.remove('scale-90');
+            envContent.classList.add('scale-100');
+        }, 50);
+    }
+
+    function closeEnvelope() {
+        envModal.classList.add('opacity-0');
+        envContent.classList.remove('scale-100');
+        envContent.classList.add('scale-90');
+        setTimeout(() => {
+            envModal.classList.add('hidden');
+        }, 300);
+    }
+
+// --- 🕵️‍♀️ SOULMATE SCANNER LOGIC ---
+    let scanTimer;
+    const scanner = document.getElementById('scanner-container');
+    const scanLine = document.getElementById('scan-line');
+    const statusText = document.getElementById('scan-status');
+    const fingerprint = document.getElementById('fingerprint-icon');
+    const accessMsg = document.getElementById('access-granted');
+
+    function startScan() {
+        // Reset State
+        accessMsg.classList.add('hidden', 'scale-0');
+        
+        // Visuals
+        scanner.classList.add('border-green-400', 'bg-green-50');
+        scanLine.classList.remove('hidden');
+        statusText.innerText = "SCANNING BIOMETRICS...";
+        statusText.classList.add('text-green-600', 'animate-pulse');
+        fingerprint.style.opacity = "0.5";
+
+        // Start 3-Second Timer
+        scanTimer = setTimeout(() => {
+            completeScan();
+        }, 2500); // 2.5 seconds hold time
+    }
+
+    function stopScan() {
+        clearTimeout(scanTimer);
+        
+        // Reset Visuals (if not already success)
+        if (statusText.innerText !== "ACCESS GRANTED") {
+            scanner.classList.remove('border-green-400', 'bg-green-50');
+            scanLine.classList.add('hidden');
+            statusText.innerText = "Scan Aborted. Hold longer.";
+            statusText.classList.remove('text-green-600', 'animate-pulse');
+            statusText.classList.add('text-red-400');
+            fingerprint.style.opacity = "1";
+            
+            setTimeout(() => {
+                statusText.innerText = "Hold finger to scan...";
+                statusText.classList.remove('text-red-400');
+            }, 2000);
+        }
+    }
+
+    function completeScan() {
+        // Success State
+        scanLine.classList.add('hidden');
+        statusText.innerText = "ACCESS GRANTED";
+        statusText.classList.remove('animate-pulse');
+        
+        // Show Secret Message
+        accessMsg.classList.remove('hidden');
+        setTimeout(() => accessMsg.classList.remove('scale-0'), 100);
+        
+        // Play Confetti
+        confetti({
+            particleCount: 50,
+            spread: 60,
+            colors: ['#22c55e', '#ffffff'] // Green and White
+        });
+    }
+
+
+    </script>
+  </body>
+</html>
