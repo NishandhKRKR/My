@@ -13,18 +13,6 @@
     <script>
       tailwind.config = {
         darkMode: 'class',
-        theme: {
-          extend: {
-            colors: {
-              love: { 50: "#fff0f3", 100: "#ffccd5", 500: "#ff4d6d", 900: "#880d1e" },
-              night: { bg: "#0f172a", card: "#1e293b" },
-            },
-            fontFamily: {
-              romantic: ['"Dancing Script"', "cursive"],
-              body: ['"Inter"', "sans-serif"],
-            }
-          }
-        }
       }
     </script>
 
@@ -36,29 +24,11 @@
       .glass { background: rgba(255, 255, 255, 0.3); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
       .dark .glass { background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.1); }
 
-      /* 3D Flip Cards (Fixed for iPhone/Mobile) */
+      /* 3D Flip Cards */
       .perspective-1000 { perspective: 1000px; }
       .group:hover .flip-card-inner { transform: rotateY(180deg); }
-      
-      .flip-card-inner {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        text-align: center;
-        transition: transform 0.8s;
-        transform-style: preserve-3d;
-        -webkit-transform-style: preserve-3d; /* Safari Fix */
-      }
-
-      .flip-card-front, .flip-card-back {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        -webkit-backface-visibility: hidden;
-        backface-visibility: hidden;
-        border-radius: 1rem;
-      }
-
+      .flip-card-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.8s; transform-style: preserve-3d; }
+      .flip-card-front, .flip-card-back { position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; border-radius: 1rem; }
       .flip-card-back { transform: rotateY(180deg); }
 
       /* Animations */
@@ -79,17 +49,17 @@
     </style>
   </head>
   
-  <body class="bg-love-50 text-gray-800 dark:bg-night-bg dark:text-gray-100 transition-colors duration-500 font-body overflow-x-hidden">
+  <body class="bg-rose-50 text-gray-800 dark:bg-slate-900 dark:text-gray-100 transition-colors duration-500 font-sans overflow-x-hidden">
 
     <audio id="bgMusic" loop><source src="assets/myaudio.mp3" type="audio/mpeg"></audio>
-    <button id="musicBtn" class="fixed bottom-4 right-4 z-[60] bg-white/20 backdrop-blur-md p-3 rounded-full text-love-500 shadow-xl border border-white/30 hover:scale-110 transition-all duration-300 hidden">
+    <button id="musicBtn" class="fixed bottom-4 right-4 z-[60] bg-white/20 backdrop-blur-md p-3 rounded-full text-rose-500 shadow-xl border border-white/30 hover:scale-110 transition-all duration-300 hidden">
         🎵
     </button>
 
     <div id="proposal-overlay" class="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-pink-100 bg-cover bg-center transition-opacity duration-1000" style="background-image: url('https://images.unsplash.com/photo-1518621736915-f3b1c41bfd00?q=80&w=1920&auto=format&fit=crop');">
         <div class="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
         <div class="relative z-10 text-center p-6">
-            <h1 class="text-5xl md:text-7xl font-romantic text-white mb-8 drop-shadow-lg animate-bounce">Will you marry me? 💍</h1>
+            <h1 class="text-5xl md:text-7xl font-['Dancing_Script'] text-white mb-8 drop-shadow-lg animate-bounce">Will you marry me? 💍</h1>
             <div class="flex items-center justify-center gap-8 h-32 w-full max-w-md mx-auto">
                 <button id="yesBtn" class="px-8 py-3 bg-green-500 hover:bg-green-600 text-white font-bold rounded-full text-xl shadow-lg transform transition hover:scale-110">YES! 😍</button>
                 <button id="noBtn" class="px-8 py-3 bg-red-500 text-white font-bold rounded-full text-xl shadow-lg transition-all duration-100 ease-out">No 😢</button>
@@ -100,60 +70,65 @@
     <div id="main-content" class="hidden opacity-0 transition-opacity duration-1000">
         
         <nav class="fixed w-full z-50 top-0 start-0 glass px-6 py-4 flex justify-between items-center transition-all duration-300">
-            <div class="text-2xl font-romantic font-bold text-love-500 animate-pulse-slow">
+            <div class="text-2xl font-['Dancing_Script'] font-bold text-rose-500 animate-pulse-slow">
                 NISHANDH ❤️ <span id="herName">KOKILA</span>
             </div>
             <button id="themeToggle" class="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition">
                 <span id="sunIcon" class="hidden text-yellow-400 text-xl">☀️</span>
-                <span id="moonIcon" class="block text-love-900 text-xl">🌙</span>
+                <span id="moonIcon" class="block text-slate-900 text-xl">🌙</span>
             </button>
         </nav>
 
-        <main class="pt-24 px-4 min-h-screen flex flex-col items-center justify-center space-y-12">
+        <main class="pt-24 px-4 min-h-screen flex flex-col items-center space-y-20 pb-20">
             
-            <h1 class="text-4xl md:text-6xl font-romantic text-center">
-                Designing for <span class="text-love-500">Love</span>
+            <h1 class="text-4xl md:text-6xl font-['Dancing_Script'] text-center">
+                Designing for <span class="text-rose-500">Love</span>
             </h1>
 
             <div class="relative w-full max-w-4xl h-[500px] rounded-3xl overflow-hidden shadow-2xl mb-12 group">
                 <div id="carousel-track" class="w-full h-full relative">
                     <div class="carousel-slide absolute inset-0 transition-opacity duration-1000 opacity-100">
                         <img src="assets/NEW/IMG_20241020_101214.jpg" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-8"><h2 class="text-white text-3xl font-romantic">Every moment with you...</h2></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-8"><h2 class="text-white text-3xl font-['Dancing_Script']">Every moment with you...</h2></div>
                     </div>
                     <div class="carousel-slide absolute inset-0 transition-opacity duration-1000 opacity-0">
                         <img src="assets/NEW/IMG_20241020_081215.jpg" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-8"><h2 class="text-white text-3xl font-romantic">...is a beautiful memory.</h2></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-8"><h2 class="text-white text-3xl font-['Dancing_Script']">...is a beautiful memory.</h2></div>
                     </div>
                     <div class="carousel-slide absolute inset-0 transition-opacity duration-1000 opacity-0">
                         <img src="assets/NEW/IMG_20241020_081202.jpg" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-8"><h2 class="text-white text-3xl font-romantic">I love you forever.</h2></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-8"><h2 class="text-white text-3xl font-['Dancing_Script']">I love you forever.</h2></div>
                     </div>
                 </div>
-                <button id="prevBtn" class="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 backdrop-blur-md p-3 rounded-full hover:bg-white/40 transition opacity-100 md:opacity-0 md:group-hover:opacity-100">❮</button>
-                <button id="nextBtn" class="absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 backdrop-blur-md p-3 rounded-full hover:bg-white/40 transition opacity-100 md:opacity-0 md:group-hover:opacity-100">❯</button>
+                <button id="prevBtn" class="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 backdrop-blur-md p-3 rounded-full hover:bg-white/40 transition opacity-0 group-hover:opacity-100">❮</button>
+                <button id="nextBtn" class="absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 backdrop-blur-md p-3 rounded-full hover:bg-white/40 transition opacity-0 group-hover:opacity-100">❯</button>
+                <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
+                    <div class="dot w-3 h-3 rounded-full bg-white opacity-100 cursor-pointer"></div>
+                    <div class="dot w-3 h-3 rounded-full bg-white/50 cursor-pointer"></div>
+                    <div class="dot w-3 h-3 rounded-full bg-white/50 cursor-pointer"></div>
+                </div>
             </div>
 
             <section class="w-full max-w-6xl mx-auto py-20 px-4">
-                <h2 class="text-3xl md:text-5xl font-romantic text-center text-love-900 mb-12">
+                <h2 class="text-3xl md:text-5xl font-['Dancing_Script'] text-center text-rose-900 mb-12">
                     3 Reasons Why I Love You ❤️
                 </h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <div class="group h-80 w-full perspective-1000 cursor-pointer">
                         <div class="flip-card-inner shadow-xl rounded-2xl">
-                            <div class="flip-card-front bg-white/40 backdrop-blur-md border border-white/50 flex flex-col items-center justify-center z-20"><div class="text-6xl mb-4">🥰</div><h3 class="text-2xl font-bold text-love-500">Your Smile</h3></div>
-                            <div class="flip-card-back bg-gradient-to-br from-love-500 to-love-900 flex items-center justify-center px-6 text-center"><p class="text-white text-lg font-medium">"It lights up my darkest days. Whenever I see you smile, I forget all my problems."</p></div>
+                            <div class="flip-card-front bg-white/40 backdrop-blur-md border border-white/50 flex flex-col items-center justify-center z-20"><div class="text-6xl mb-4">🥰</div><h3 class="text-2xl font-bold text-rose-500">Your Smile</h3></div>
+                            <div class="flip-card-back bg-gradient-to-br from-rose-500 to-rose-900 flex items-center justify-center px-6 text-center"><p class="text-white text-lg font-medium">"It lights up my darkest days. Whenever I see you smile, I forget all my problems."</p></div>
                         </div>
                     </div>
                     <div class="group h-80 w-full perspective-1000 cursor-pointer">
                         <div class="flip-card-inner shadow-xl rounded-2xl">
-                            <div class="flip-card-front bg-white/40 backdrop-blur-md border border-white/50 flex flex-col items-center justify-center z-20"><div class="text-6xl mb-4">🧠</div><h3 class="text-2xl font-bold text-love-500">Your Mind</h3></div>
+                            <div class="flip-card-front bg-white/40 backdrop-blur-md border border-white/50 flex flex-col items-center justify-center z-20"><div class="text-6xl mb-4">🧠</div><h3 class="text-2xl font-bold text-rose-500">Your Mind</h3></div>
                             <div class="flip-card-back bg-gradient-to-br from-purple-500 to-purple-900 flex items-center justify-center px-6 text-center"><p class="text-white text-lg font-medium">"I love how you think, how you challenge me, and how you support my dreams."</p></div>
                         </div>
                     </div>
                     <div class="group h-80 w-full perspective-1000 cursor-pointer">
                         <div class="flip-card-inner shadow-xl rounded-2xl">
-                            <div class="flip-card-front bg-white/40 backdrop-blur-md border border-white/50 flex flex-col items-center justify-center z-20"><div class="text-6xl mb-4">🌟</div><h3 class="text-2xl font-bold text-love-500">Our Future</h3></div>
+                            <div class="flip-card-front bg-white/40 backdrop-blur-md border border-white/50 flex flex-col items-center justify-center z-20"><div class="text-6xl mb-4">🌟</div><h3 class="text-2xl font-bold text-rose-500">Our Future</h3></div>
                             <div class="flip-card-back bg-gradient-to-br from-pink-500 to-orange-400 flex items-center justify-center px-6 text-center"><p class="text-white text-lg font-medium">"I can't wait to build a life with you. You are my forever."</p></div>
                         </div>
                     </div>
@@ -161,125 +136,125 @@
             </section>
 
             <section class="w-full max-w-4xl mx-auto mt-20 px-4">
-                <h2 class="text-3xl md:text-5xl font-romantic text-center text-love-900 mb-16 reveal">Our Journey Together ✨</h2>
-                <div class="space-y-24 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-love-300 before:to-transparent">
+                <h2 class="text-3xl md:text-5xl font-['Dancing_Script'] text-center text-rose-900 mb-16 reveal">Our Journey Together ✨</h2>
+                <div class="space-y-24 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-rose-300 before:to-transparent">
                     
                     <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal">
-                        <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-love-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 absolute left-0 md:static">❤️</div>
+                        <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-rose-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 absolute left-0 md:static">❤️</div>
                         <div class="w-[calc(100%-4rem)] md:w-[45%] bg-white/40 dark:bg-black/40 backdrop-blur-md p-6 rounded-2xl border border-white/30 shadow-lg ml-auto md:ml-0 md:mr-0 transition hover:scale-[1.02]">
-                            <div class="h-48 bg-love-200 rounded-lg mb-4 overflow-hidden"><img src="assets/IMG20230705102717.jpg" alt="First Date" class="w-full h-full object-cover hover:scale-110 transition duration-700"></div>
-                            <span class="text-love-500 font-bold tracking-wider text-sm">JUL 05, 2023</span>
-                            <h3 class="text-2xl font-romantic text-gray-800 dark:text-gray-100 mt-1">The First Date</h3>
+                            <div class="h-48 bg-rose-200 rounded-lg mb-4 overflow-hidden"><img src="assets/IMG20230705102717.jpg" alt="First Date" class="w-full h-full object-cover hover:scale-110 transition duration-700"></div>
+                            <span class="text-rose-500 font-bold tracking-wider text-sm">JUL 05, 2023</span>
+                            <h3 class="text-2xl font-['Dancing_Script'] text-gray-800 dark:text-gray-100 mt-1">The First Date</h3>
                             <p class="text-gray-600 dark:text-gray-300 mt-2 text-sm leading-relaxed">The moment I saw you, I knew my life was about to change forever.</p>
                         </div>
                     </div>
 
                     <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal">
-                        <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-love-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 absolute left-0 md:static">💌</div>
+                        <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-rose-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 absolute left-0 md:static">💌</div>
                         <div class="w-[calc(100%-4rem)] md:w-[45%] bg-white/40 dark:bg-black/40 backdrop-blur-md p-6 rounded-2xl border border-white/30 shadow-lg ml-auto md:ml-0 md:mr-0 transition hover:scale-[1.02]">
-                            <div class="h-48 bg-love-200 rounded-lg mb-4 overflow-hidden"><img src="assets/IMG_0337.jpg" alt="First Trip" class="w-full h-full object-cover hover:scale-110 transition duration-700"></div>
-                            <span class="text-love-500 font-bold tracking-wider text-sm">OCT 19, 2024</span>
-                            <h3 class="text-2xl font-romantic text-gray-800 dark:text-gray-100 mt-1">Our First Trip</h3>
+                            <div class="h-48 bg-rose-200 rounded-lg mb-4 overflow-hidden"><img src="assets/IMG_0337.jpg" alt="First Trip" class="w-full h-full object-cover hover:scale-110 transition duration-700"></div>
+                            <span class="text-rose-500 font-bold tracking-wider text-sm">OCT 19, 2024</span>
+                            <h3 class="text-2xl font-['Dancing_Script'] text-gray-800 dark:text-gray-100 mt-1">Our First Trip</h3>
                             <p class="text-gray-600 dark:text-gray-300 mt-2 text-sm leading-relaxed">Traveling the world feels like home when I'm walking beside you.</p>
                         </div>
                     </div>
 
                     <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal">
-                        <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-love-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 absolute left-0 md:static">❤️</div>
+                        <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-rose-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 absolute left-0 md:static">❤️</div>
                         <div class="w-[calc(100%-4rem)] md:w-[45%] bg-white/40 dark:bg-black/40 backdrop-blur-md p-6 rounded-2xl border border-white/30 shadow-lg ml-auto md:ml-0 md:mr-0 transition hover:scale-[1.02]">
-                            <div class="h-48 bg-love-200 rounded-lg mb-4 overflow-hidden"><img src="assets/IMG_0341.jpg" alt="Holding" class="w-full h-full object-cover hover:scale-110 transition duration-700"></div>
-                            <span class="text-love-500 font-bold tracking-wider text-sm">JUL 05, 2023</span>
-                            <h3 class="text-2xl font-romantic text-gray-800 dark:text-gray-100 mt-1">Holding</h3>
+                            <div class="h-48 bg-rose-200 rounded-lg mb-4 overflow-hidden"><img src="assets/IMG_0341.jpg" alt="Holding" class="w-full h-full object-cover hover:scale-110 transition duration-700"></div>
+                            <span class="text-rose-500 font-bold tracking-wider text-sm">JUL 05, 2023</span>
+                            <h3 class="text-2xl font-['Dancing_Script'] text-gray-800 dark:text-gray-100 mt-1">Holding</h3>
                             <p class="text-gray-600 dark:text-gray-300 mt-2 text-sm leading-relaxed">Traveling the world is better when I'm holding your hand.</p>
                         </div>
                     </div>
 
                     <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal">
-                        <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-love-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 absolute left-0 md:static">💌</div>
+                        <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-rose-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 absolute left-0 md:static">💌</div>
                         <div class="w-[calc(100%-4rem)] md:w-[45%] bg-white/40 dark:bg-black/40 backdrop-blur-md p-6 rounded-2xl border border-white/30 shadow-lg ml-auto md:ml-0 md:mr-0 transition hover:scale-[1.02]">
-                            <div class="h-48 bg-love-200 rounded-lg mb-4 overflow-hidden"><img src="assets/IMG_0356.jpg" alt="Favorite" class="w-full h-full object-cover hover:scale-110 transition duration-700"></div>
-                            <span class="text-love-500 font-bold tracking-wider text-sm">DEC 25, 2024</span>
-                            <h3 class="text-2xl font-romantic text-gray-800 dark:text-gray-100 mt-1">Favorite</h3>
+                            <div class="h-48 bg-rose-200 rounded-lg mb-4 overflow-hidden"><img src="assets/IMG_0356.jpg" alt="Favorite" class="w-full h-full object-cover hover:scale-110 transition duration-700"></div>
+                            <span class="text-rose-500 font-bold tracking-wider text-sm">DEC 25, 2024</span>
+                            <h3 class="text-2xl font-['Dancing_Script'] text-gray-800 dark:text-gray-100 mt-1">Favorite</h3>
                             <p class="text-gray-600 dark:text-gray-300 mt-2 text-sm leading-relaxed">Wherever we go, my favorite place is next to you.</p>
                         </div>
                     </div>
 
                     <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal">
-                        <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-love-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 absolute left-0 md:static">❤️</div>
+                        <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-rose-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 absolute left-0 md:static">❤️</div>
                         <div class="w-[calc(100%-4rem)] md:w-[45%] bg-white/40 dark:bg-black/40 backdrop-blur-md p-6 rounded-2xl border border-white/30 shadow-lg ml-auto md:ml-0 md:mr-0 transition hover:scale-[1.02]">
-                            <div class="h-48 bg-love-200 rounded-lg mb-4 overflow-hidden"><img src="assets/NEW/IMG_20241019_174947.jpg" alt="Feels" class="w-full h-full object-cover hover:scale-110 transition duration-700"></div>
-                            <span class="text-love-500 font-bold tracking-wider text-sm">FEB 14, 2024</span>
-                            <h3 class="text-2xl font-romantic text-gray-800 dark:text-gray-100 mt-1">Feels</h3>
+                            <div class="h-48 bg-rose-200 rounded-lg mb-4 overflow-hidden"><img src="assets/NEW/IMG_20241019_174947.jpg" alt="Feels" class="w-full h-full object-cover hover:scale-110 transition duration-700"></div>
+                            <span class="text-rose-500 font-bold tracking-wider text-sm">FEB 14, 2024</span>
+                            <h3 class="text-2xl font-['Dancing_Script'] text-gray-800 dark:text-gray-100 mt-1">Feels</h3>
                             <p class="text-gray-600 dark:text-gray-300 mt-2 text-sm leading-relaxed">Loving you feels easy, like breathing.</p>
                         </div>
                     </div>
 
                     <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal">
-                        <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-love-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 absolute left-0 md:static">💌</div>
+                        <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-rose-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 absolute left-0 md:static">💌</div>
                         <div class="w-[calc(100%-4rem)] md:w-[45%] bg-white/40 dark:bg-black/40 backdrop-blur-md p-6 rounded-2xl border border-white/30 shadow-lg ml-auto md:ml-0 md:mr-0 transition hover:scale-[1.02]">
-                            <div class="h-48 bg-love-200 rounded-lg mb-4 overflow-hidden"><img src="assets/NEW/IMG_20241020_081202.jpg" alt="World" class="w-full h-full object-cover hover:scale-110 transition duration-700"></div>
-                            <span class="text-love-500 font-bold tracking-wider text-sm">DEC 25, 2024</span>
-                            <h3 class="text-2xl font-romantic text-gray-800 dark:text-gray-100 mt-1">World</h3>
+                            <div class="h-48 bg-rose-200 rounded-lg mb-4 overflow-hidden"><img src="assets/NEW/IMG_20241020_081202.jpg" alt="World" class="w-full h-full object-cover hover:scale-110 transition duration-700"></div>
+                            <span class="text-rose-500 font-bold tracking-wider text-sm">DEC 25, 2024</span>
+                            <h3 class="text-2xl font-['Dancing_Script'] text-gray-800 dark:text-gray-100 mt-1">World</h3>
                             <p class="text-gray-600 dark:text-gray-300 mt-2 text-sm leading-relaxed">Seeing the world means more when I’m seeing it with you.</p>
                         </div>
                     </div>
 
                     <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal">
-                        <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-love-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 absolute left-0 md:static">❤️</div>
+                        <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-rose-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 absolute left-0 md:static">❤️</div>
                         <div class="w-[calc(100%-4rem)] md:w-[45%] bg-white/40 dark:bg-black/40 backdrop-blur-md p-6 rounded-2xl border border-white/30 shadow-lg ml-auto md:ml-0 md:mr-0 transition hover:scale-[1.02]">
-                            <div class="h-48 bg-love-200 rounded-lg mb-4 overflow-hidden"><img src="assets/NEW/IMG_20241020_081215.jpg" alt="Love" class="w-full h-full object-cover hover:scale-110 transition duration-700"></div>
-                            <span class="text-love-500 font-bold tracking-wider text-sm">FEB 14, 2024</span>
-                            <h3 class="text-2xl font-romantic text-gray-800 dark:text-gray-100 mt-1">Love</h3>
+                            <div class="h-48 bg-rose-200 rounded-lg mb-4 overflow-hidden"><img src="assets/NEW/IMG_20241020_081215.jpg" alt="Love" class="w-full h-full object-cover hover:scale-110 transition duration-700"></div>
+                            <span class="text-rose-500 font-bold tracking-wider text-sm">FEB 14, 2024</span>
+                            <h3 class="text-2xl font-['Dancing_Script'] text-gray-800 dark:text-gray-100 mt-1">Love</h3>
                             <p class="text-gray-600 dark:text-gray-300 mt-2 text-sm leading-relaxed">Love isn’t about the place, it’s about who I’m with.</p>
                         </div>
                     </div>
 
                     <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal">
-                        <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-love-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 absolute left-0 md:static">💌</div>
+                        <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-rose-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 absolute left-0 md:static">💌</div>
                         <div class="w-[calc(100%-4rem)] md:w-[45%] bg-white/40 dark:bg-black/40 backdrop-blur-md p-6 rounded-2xl border border-white/30 shadow-lg ml-auto md:ml-0 md:mr-0 transition hover:scale-[1.02]">
-                            <div class="h-48 bg-love-200 rounded-lg mb-4 overflow-hidden"><img src="assets/NEW/IMG_20241020_085601.jpg" alt="Adventure" class="w-full h-full object-cover hover:scale-110 transition duration-700"></div>
-                            <span class="text-love-500 font-bold tracking-wider text-sm">DEC 25, 2024</span>
-                            <h3 class="text-2xl font-romantic text-gray-800 dark:text-gray-100 mt-1">Adventure</h3>
+                            <div class="h-48 bg-rose-200 rounded-lg mb-4 overflow-hidden"><img src="assets/NEW/IMG_20241020_085601.jpg" alt="Adventure" class="w-full h-full object-cover hover:scale-110 transition duration-700"></div>
+                            <span class="text-rose-500 font-bold tracking-wider text-sm">DEC 25, 2024</span>
+                            <h3 class="text-2xl font-['Dancing_Script'] text-gray-800 dark:text-gray-100 mt-1">Adventure</h3>
                             <p class="text-gray-600 dark:text-gray-300 mt-2 text-sm leading-relaxed">I found my adventure the day I found you.</p>
                         </div>
                     </div>
 
                     <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal">
-                        <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-love-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 absolute left-0 md:static">❤️</div>
+                        <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-rose-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 absolute left-0 md:static">❤️</div>
                         <div class="w-[calc(100%-4rem)] md:w-[45%] bg-white/40 dark:bg-black/40 backdrop-blur-md p-6 rounded-2xl border border-white/30 shadow-lg ml-auto md:ml-0 md:mr-0 transition hover:scale-[1.02]">
-                            <div class="h-48 bg-love-200 rounded-lg mb-4 overflow-hidden"><img src="assets/NEW/IMG_20241020_100555.jpg" alt="Story" class="w-full h-full object-cover hover:scale-110 transition duration-700"></div>
-                            <span class="text-love-500 font-bold tracking-wider text-sm">FEB 14, 2024</span>
-                            <h3 class="text-2xl font-romantic text-gray-800 dark:text-gray-100 mt-1">Story</h3>
+                            <div class="h-48 bg-rose-200 rounded-lg mb-4 overflow-hidden"><img src="assets/NEW/IMG_20241020_100555.jpg" alt="Story" class="w-full h-full object-cover hover:scale-110 transition duration-700"></div>
+                            <span class="text-rose-500 font-bold tracking-wider text-sm">FEB 14, 2024</span>
+                            <h3 class="text-2xl font-['Dancing_Script'] text-gray-800 dark:text-gray-100 mt-1">Story</h3>
                             <p class="text-gray-600 dark:text-gray-300 mt-2 text-sm leading-relaxed">Every story I love starts with you.</p>
                         </div>
                     </div>
 
                     <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal">
-                        <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-love-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 absolute left-0 md:static">💌</div>
+                        <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-rose-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 absolute left-0 md:static">💌</div>
                         <div class="w-[calc(100%-4rem)] md:w-[45%] bg-white/40 dark:bg-black/40 backdrop-blur-md p-6 rounded-2xl border border-white/30 shadow-lg ml-auto md:ml-0 md:mr-0 transition hover:scale-[1.02]">
-                            <div class="h-48 bg-love-200 rounded-lg mb-4 overflow-hidden"><img src="assets/NEW/IMG_20241020_101214.jpg" alt="Moments" class="w-full h-full object-cover hover:scale-110 transition duration-700"></div>
-                            <span class="text-love-500 font-bold tracking-wider text-sm">DEC 25, 2024</span>
-                            <h3 class="text-2xl font-romantic text-gray-800 dark:text-gray-100 mt-1">Moments</h3>
+                            <div class="h-48 bg-rose-200 rounded-lg mb-4 overflow-hidden"><img src="assets/NEW/IMG_20241020_101214.jpg" alt="Moments" class="w-full h-full object-cover hover:scale-110 transition duration-700"></div>
+                            <span class="text-rose-500 font-bold tracking-wider text-sm">DEC 25, 2024</span>
+                            <h3 class="text-2xl font-['Dancing_Script'] text-gray-800 dark:text-gray-100 mt-1">Moments</h3>
                             <p class="text-gray-600 dark:text-gray-300 mt-2 text-sm leading-relaxed">I don’t chase sunsets anymore, I chase moments with you.</p>
                         </div>
                     </div>
 
                     <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal">
-                        <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-love-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 absolute left-0 md:static">❤️</div>
+                        <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-rose-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 absolute left-0 md:static">❤️</div>
                         <div class="w-[calc(100%-4rem)] md:w-[45%] bg-white/40 dark:bg-black/40 backdrop-blur-md p-6 rounded-2xl border border-white/30 shadow-lg ml-auto md:ml-0 md:mr-0 transition hover:scale-[1.02]">
-                            <div class="h-48 bg-love-200 rounded-lg mb-4 overflow-hidden"><img src="assets/NEW/IMG_20241020_132936.jpg" alt="Baby" class="w-full h-full object-cover hover:scale-110 transition duration-700"></div>
-                            <span class="text-love-500 font-bold tracking-wider text-sm">FEB 14, 2024</span>
-                            <h3 class="text-2xl font-romantic text-gray-800 dark:text-gray-100 mt-1">Baby</h3>
+                            <div class="h-48 bg-rose-200 rounded-lg mb-4 overflow-hidden"><img src="assets/NEW/IMG_20241020_132936.jpg" alt="Baby" class="w-full h-full object-cover hover:scale-110 transition duration-700"></div>
+                            <span class="text-rose-500 font-bold tracking-wider text-sm">FEB 14, 2024</span>
+                            <h3 class="text-2xl font-['Dancing_Script'] text-gray-800 dark:text-gray-100 mt-1">Baby</h3>
                             <p class="text-gray-600 dark:text-gray-300 mt-2 text-sm leading-relaxed">Loving you feels like choosing the right path every time.</p>
                         </div>
                     </div>
 
                     <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group reveal">
-                        <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-love-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 absolute left-0 md:static">💌</div>
+                        <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-white bg-rose-500 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 absolute left-0 md:static">💌</div>
                         <div class="w-[calc(100%-4rem)] md:w-[45%] bg-white/40 dark:bg-black/40 backdrop-blur-md p-6 rounded-2xl border border-white/30 shadow-lg ml-auto md:ml-0 md:mr-0 transition hover:scale-[1.02]">
-                            <div class="h-48 bg-love-200 rounded-lg mb-4 overflow-hidden"><img src="assets/Baby.jpg" alt="Found Gem" class="w-full h-full object-cover hover:scale-110 transition duration-700"></div>
-                            <span class="text-love-500 font-bold tracking-wider text-sm">DEC 25, 2024</span>
-                            <h3 class="text-2xl font-romantic text-gray-800 dark:text-gray-100 mt-1">Found Gem</h3>
+                            <div class="h-48 bg-rose-200 rounded-lg mb-4 overflow-hidden"><img src="assets/Baby.jpg" alt="Found Gem" class="w-full h-full object-cover hover:scale-110 transition duration-700"></div>
+                            <span class="text-rose-500 font-bold tracking-wider text-sm">DEC 25, 2024</span>
+                            <h3 class="text-2xl font-['Dancing_Script'] text-gray-800 dark:text-gray-100 mt-1">Found Gem</h3>
                             <p class="text-gray-600 dark:text-gray-300 mt-2 text-sm leading-relaxed">I stopped searching when I found you.</p>
                         </div>
                     </div>
@@ -288,29 +263,29 @@
             </section>
 
             <section class="w-full max-w-4xl mx-auto text-center py-20 px-4">
-                <h2 class="text-3xl md:text-5xl font-romantic text-love-900 mb-8">
+                <h2 class="text-3xl md:text-5xl font-['Dancing_Script'] text-rose-900 mb-8">
                     I have loved you for...
                 </h2>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-                    <div class="bg-white/40 backdrop-blur-sm p-6 rounded-2xl border border-white/50 shadow-lg"><span id="days" class="block text-4xl md:text-6xl font-bold text-love-500">0</span><span class="text-gray-600 uppercase tracking-widest text-xs">Days</span></div>
-                    <div class="bg-white/40 backdrop-blur-sm p-6 rounded-2xl border border-white/50 shadow-lg"><span id="hours" class="block text-4xl md:text-6xl font-bold text-love-500">0</span><span class="text-gray-600 uppercase tracking-widest text-xs">Hours</span></div>
-                    <div class="bg-white/40 backdrop-blur-sm p-6 rounded-2xl border border-white/50 shadow-lg"><span id="minutes" class="block text-4xl md:text-6xl font-bold text-love-500">0</span><span class="text-gray-600 uppercase tracking-widest text-xs">Minutes</span></div>
-                    <div class="bg-white/40 backdrop-blur-sm p-6 rounded-2xl border border-white/50 shadow-lg"><span id="seconds" class="block text-4xl md:text-6xl font-bold text-love-500">0</span><span class="text-gray-600 uppercase tracking-widest text-xs">Seconds</span></div>
+                    <div class="bg-white/40 backdrop-blur-sm p-6 rounded-2xl border border-white/50 shadow-lg"><span id="days" class="block text-4xl md:text-6xl font-bold text-rose-500">0</span><span class="text-gray-600 uppercase tracking-widest text-xs">Days</span></div>
+                    <div class="bg-white/40 backdrop-blur-sm p-6 rounded-2xl border border-white/50 shadow-lg"><span id="hours" class="block text-4xl md:text-6xl font-bold text-rose-500">0</span><span class="text-gray-600 uppercase tracking-widest text-xs">Hours</span></div>
+                    <div class="bg-white/40 backdrop-blur-sm p-6 rounded-2xl border border-white/50 shadow-lg"><span id="minutes" class="block text-4xl md:text-6xl font-bold text-rose-500">0</span><span class="text-gray-600 uppercase tracking-widest text-xs">Minutes</span></div>
+                    <div class="bg-white/40 backdrop-blur-sm p-6 rounded-2xl border border-white/50 shadow-lg"><span id="seconds" class="block text-4xl md:text-6xl font-bold text-rose-500">0</span><span class="text-gray-600 uppercase tracking-widest text-xs">Seconds</span></div>
                 </div>
                 <p class="mt-4 text-gray-500 font-sans text-sm">...and counting every heartbeat.</p>
             </section>
 
             <section class="w-full max-w-5xl mx-auto py-10 px-4 relative group">
-                <h2 class="text-3xl md:text-5xl font-romantic text-center text-love-900 mb-12">Where it all began 🌍</h2>
+                <h2 class="text-3xl md:text-5xl font-['Dancing_Script'] text-center text-rose-900 mb-12">Where it all began 🌍</h2>
                 <div class="relative w-full h-96 rounded-3xl overflow-hidden shadow-2xl border-4 border-white/50">
                     <iframe src="https://www.google.com/maps/embed?pb=!4v1771006235634!6m8!1m7!1slqBu1DKmTYtbtC-dKMHCaw!2m2!1d11.01606955509638!2d76.96806819244154!3f14.405265773539101!4f-9.891882543011647!5f0.7820865974627469" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition duration-700"></iframe>
                     <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
                         <div class="relative flex items-center justify-center">
-                            <span class="animate-ping absolute inline-flex h-16 w-16 rounded-full bg-love-400 opacity-75"></span>
-                            <span class="relative inline-flex rounded-full h-8 w-8 bg-love-600 border-4 border-white shadow-xl"></span>
+                            <span class="animate-ping absolute inline-flex h-16 w-16 rounded-full bg-rose-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-8 w-8 bg-rose-600 border-4 border-white shadow-xl"></span>
                         </div>
                         <div class="mt-4 bg-white/90 backdrop-blur-md px-4 py-2 rounded-xl shadow-lg transform transition group-hover:scale-110">
-                            <p class="font-bold text-love-900 text-sm">Our Favorite Spot ❤️</p>
+                            <p class="font-bold text-rose-900 text-sm">Our Favorite Spot ❤️</p>
                         </div>
                     </div>
                 </div>
@@ -319,40 +294,40 @@
             <section class="w-full max-w-3xl mx-auto py-20 px-6">
                 <div class="bg-white/60 dark:bg-black/40 backdrop-blur-md p-8 md:p-12 rounded-3xl shadow-xl border border-white/40 relative overflow-hidden">
                     <div class="absolute top-4 right-4 text-4xl opacity-20 rotate-12">🪶</div>
-                    <h2 class="text-3xl font-romantic text-love-900 mb-6">My Promise to You</h2>
+                    <h2 class="text-3xl font-['Dancing_Script'] text-rose-900 mb-6">My Promise to You</h2>
                     <div class="min-h-[150px]">
                         <p id="typewriter-text" class="text-lg md:text-xl font-sans text-gray-700 dark:text-gray-200 leading-relaxed"></p>
-                        <span class="inline-block w-1 h-6 bg-love-500 animate-pulse-slow ml-1 align-middle"></span>
+                        <span class="inline-block w-1 h-6 bg-rose-500 animate-pulse-slow ml-1 align-middle"></span>
                     </div>
-                    <div class="mt-8 text-right"><p class="font-romantic text-2xl text-love-600">- Forever Yours, Nishandh</p></div>
+                    <div class="mt-8 text-right"><p class="font-['Dancing_Script'] text-2xl text-rose-600">- Forever Yours, Nishandh</p></div>
                 </div>
             </section>
 
             <section class="w-full max-w-4xl mx-auto px-4 mt-8 mb-16 transform hover:scale-[1.02] transition duration-500">
-                <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl overflow-hidden border-2 border-love-500 relative">
-                    <div class="bg-love-500 p-4 text-white text-center font-bold tracking-widest uppercase">Official Ticket to Happiness ❤️</div>
+                <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl overflow-hidden border-2 border-rose-500 relative">
+                    <div class="bg-rose-500 p-4 text-white text-center font-bold tracking-widest uppercase">Official Ticket to Happiness ❤️</div>
                     <div class="p-6 md:p-10 flex flex-col md:flex-row justify-between items-center space-y-8 md:space-y-0">
                         <div class="text-center">
                             <div class="text-5xl mb-2">🌊</div>
                             <h3 class="text-2xl font-bold text-gray-800 dark:text-white tracking-wide">KANYAKUMARI</h3>
-                            <p class="text-love-500 font-semibold">Feb 27, 2026</p>
+                            <p class="text-rose-500 font-semibold">Feb 27, 2026</p>
                             <p class="text-xs text-gray-400 mt-1">Starting the Journey</p>
                         </div>
                         <div class="flex-1 px-4 md:px-12 w-full flex flex-col items-center">
-                            <div class="text-love-500 font-romantic text-2xl mb-2">Breaking the Distance</div>
+                            <div class="text-rose-500 font-['Dancing_Script'] text-2xl mb-2">Breaking the Distance</div>
                             <div class="w-full h-1 bg-gray-300 rounded-full relative mt-2"><div class="absolute -top-4 left-1/2 -translate-x-1/2 animate-bounce text-3xl">🚂</div></div>
-                            <p class="text-xs text-love-500 mt-4 font-bold animate-pulse-slow tracking-widest uppercase">IN TRANSIT TO LOVE</p>
+                            <p class="text-xs text-rose-500 mt-4 font-bold animate-pulse-slow tracking-widest uppercase">IN TRANSIT TO LOVE</p>
                         </div>
                         <div class="text-center">
                             <div class="text-5xl mb-2">⛰️</div>
                             <h3 class="text-2xl font-bold text-gray-800 dark:text-white tracking-wide">COIMBATORE</h3>
-                            <p class="text-love-500 font-semibold">Feb 28, 2026</p>
+                            <p class="text-rose-500 font-semibold">Feb 28, 2026</p>
                             <p class="text-xs text-gray-400 mt-1">Meeting My Soulmate</p>
                         </div>
                     </div>
                     <div class="bg-gray-50 dark:bg-gray-900/50 p-6 text-center border-t border-dashed border-gray-300">
                         <p class="text-sm text-gray-500 uppercase mb-3 tracking-widest">Time remaining until we meet:</p>
-                        <div class="flex justify-center items-center space-x-4 md:space-x-8 font-mono text-3xl md:text-4xl font-bold text-love-600">
+                        <div class="flex justify-center items-center space-x-4 md:space-x-8 font-mono text-3xl md:text-4xl font-bold text-rose-600">
                             <div><span id="meet-days">00</span><span class="text-xs font-sans text-gray-400 font-normal">DAYS</span></div><span class="text-gray-300">:</span>
                             <div><span id="meet-hours">00</span><span class="text-xs font-sans text-gray-400 font-normal">HRS</span></div><span class="text-gray-300">:</span>
                             <div><span id="meet-minutes">00</span><span class="text-xs font-sans text-gray-400 font-normal">MIN</span></div><span class="text-gray-300">:</span>
@@ -362,45 +337,45 @@
                 </div>
             </section>
 
-            <section class="w-full py-20 px-4 text-center bg-gradient-to-b from-transparent to-love-50/50">
+            <section class="w-full py-20 px-4 text-center bg-gradient-to-b from-transparent to-rose-50/50">
                 <div class="relative z-10">
-                    <h2 class="text-2xl font-romantic text-love-900 mb-6">I wrote something for you...</h2>
+                    <h2 class="text-2xl font-['Dancing_Script'] text-rose-900 mb-6">I wrote something for you...</h2>
                     <button onclick="openLetter()" class="group relative inline-block transition-transform hover:scale-110 duration-300">
                         <div class="text-9xl drop-shadow-2xl filter animate-float cursor-pointer">💌</div>
-                        <div class="absolute inset-0 bg-love-400 rounded-full opacity-20 blur-xl animate-pulse-slow -z-10 group-hover:opacity-40 transition"></div>
-                        <p class="text-xs text-love-600 mt-4 font-bold tracking-widest uppercase opacity-0 group-hover:opacity-100 transition-opacity">Click to Open</p>
+                        <div class="absolute inset-0 bg-rose-400 rounded-full opacity-20 blur-xl animate-pulse-slow -z-10 group-hover:opacity-40 transition"></div>
+                        <p class="text-xs text-rose-600 mt-4 font-bold tracking-widest uppercase opacity-0 group-hover:opacity-100 transition-opacity">Click to Open</p>
                     </button>
                 </div>
                 <div id="letter-modal" class="fixed inset-0 z-[80] flex items-center justify-center bg-black/60 backdrop-blur-sm hidden opacity-0 transition-opacity duration-700">
                     <div id="letter-content" class="bg-[#fffdf5] w-11/12 max-w-lg p-10 md:p-14 rounded-sm shadow-2xl relative transform scale-0 transition-transform duration-700 border border-gray-200" style="box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);">
-                        <div class="absolute -top-3 left-1/2 -translate-x-1/2 w-24 h-6 bg-love-200/50 transform -rotate-1"></div>
+                        <div class="absolute -top-3 left-1/2 -translate-x-1/2 w-24 h-6 bg-rose-200/50 transform -rotate-1"></div>
                         <button onclick="closeLetter()" class="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-2xl">×</button>
                         <div class="space-y-6 text-center">
                             <p class="font-sans text-xs text-gray-400 uppercase tracking-widest">Feb 28, 2026 • Kanyakumari</p>
-                            <h3 class="text-3xl font-romantic text-love-600">My Dearest Kokila,</h3>
-                            <p class="font-romantic text-xl md:text-2xl text-gray-800 leading-relaxed">"Distance is just a test to see how far love can travel. <br><br> I am counting every second until I leave the ocean of <b>Kanyakumari</b> to find my heart in <b>Coimbatore</b>."</p>
-                            <div class="w-16 h-0.5 bg-love-200 mx-auto my-4"></div>
+                            <h3 class="text-3xl font-['Dancing_Script'] text-rose-600">My Dearest Kokila,</h3>
+                            <p class="font-['Dancing_Script'] text-xl md:text-2xl text-gray-800 leading-relaxed">"Distance is just a test to see how far love can travel. <br><br> I am counting every second until I leave the ocean of <b>Kanyakumari</b> to find my heart in <b>Coimbatore</b>."</p>
+                            <div class="w-16 h-0.5 bg-rose-200 mx-auto my-4"></div>
                             <p class="font-sans text-sm text-gray-600 italic">Wait for me. I'm coming home to you.</p>
-                            <div class="pt-6 font-romantic text-2xl text-love-900">With all my love,<br>Nishandh</div>
+                            <div class="pt-6 font-['Dancing_Script'] text-2xl text-rose-900">With all my love,<br>Nishandh</div>
                         </div>
                     </div>
                 </div>
             </section>
 
             <section class="w-full max-w-2xl mx-auto py-16 px-6 mb-20">
-                <h2 class="text-3xl font-romantic text-center text-love-900 mb-10">How well do you know Nishandh? 🤔</h2>
+                <h2 class="text-3xl font-['Dancing_Script'] text-center text-rose-900 mb-10">How well do you know Nishandh? 🤔</h2>
                 <div class="space-y-6">
                     <div class="bg-white/60 backdrop-blur-md p-6 rounded-2xl shadow-lg border-2 border-white transform hover:scale-[1.02] transition">
                         <h3 class="text-xl font-bold text-gray-800 mb-4">1. I am travelling 450km from Kanyakumari for... 🚂</h3>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <button onclick="checkAnswer(this, false)" class="quiz-btn bg-white py-4 rounded-xl shadow-sm hover:bg-red-100 transition font-medium text-gray-600">The Coimbatore Weather 🌦️</button>
-                            <button onclick="checkAnswer(this, true)" class="quiz-btn bg-white py-4 rounded-xl shadow-sm hover:bg-green-100 transition font-bold text-love-600">To hug my world (You) ❤️</button>
+                            <button onclick="checkAnswer(this, true)" class="quiz-btn bg-white py-4 rounded-xl shadow-sm hover:bg-green-100 transition font-bold text-rose-600">To hug my world (You) ❤️</button>
                         </div>
                     </div>
                     <div class="bg-white/60 backdrop-blur-md p-6 rounded-2xl shadow-lg border-2 border-white transform hover:scale-[1.02] transition">
                         <h3 class="text-xl font-bold text-gray-800 mb-4">2. What is Nishandh's favorite view? 👀</h3>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <button onclick="checkAnswer(this, true)" class="quiz-btn bg-white py-4 rounded-xl shadow-sm hover:bg-green-100 transition font-bold text-love-600">Kokila's Smile 🥰</button>
+                            <button onclick="checkAnswer(this, true)" class="quiz-btn bg-white py-4 rounded-xl shadow-sm hover:bg-green-100 transition font-bold text-rose-600">Kokila's Smile 🥰</button>
                             <button onclick="checkAnswer(this, false)" class="quiz-btn bg-white py-4 rounded-xl shadow-sm hover:bg-red-100 transition font-medium text-gray-600">The Ocean 🌊</button>
                         </div>
                     </div>
@@ -408,24 +383,24 @@
                         <h3 class="text-xl font-bold text-gray-800 mb-4">3. What is the first thing I will do on Feb 28th? 🫂</h3>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <button onclick="checkAnswer(this, false)" class="quiz-btn bg-white py-4 rounded-xl shadow-sm hover:bg-red-100 transition font-medium text-gray-600">Shake hands 🤝</button>
-                            <button onclick="checkAnswer(this, true)" class="quiz-btn bg-white py-4 rounded-xl shadow-sm hover:bg-green-100 transition font-bold text-love-600">Hug you tight & never let go 🫂</button>
+                            <button onclick="checkAnswer(this, true)" class="quiz-btn bg-white py-4 rounded-xl shadow-sm hover:bg-green-100 transition font-bold text-rose-600">Hug you tight & never let go 🫂</button>
                         </div>
                     </div>
                 </div>
-                <div id="quiz-result" class="text-center mt-8 hidden opacity-0 transition-opacity duration-500"><p class="text-3xl font-romantic text-love-600 animate-bounce">Correct! You are my Soulmate! 🏆</p></div>
+                <div id="quiz-result" class="text-center mt-8 hidden opacity-0 transition-opacity duration-500"><p class="text-3xl font-['Dancing_Script'] text-rose-600 animate-bounce">Correct! You are my Soulmate! 🏆</p></div>
             </section>
 
             <section class="w-full max-w-5xl mx-auto py-20 px-6">
-                <h2 class="text-3xl font-romantic text-center text-love-900 mb-4">Emergency Love Kit 🚑</h2>
+                <h2 class="text-3xl font-['Dancing_Script'] text-center text-rose-900 mb-4">Emergency Love Kit 🚑</h2>
                 <p class="text-center text-gray-500 mb-12 text-sm">Read these only when you need them!</p>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <div onclick="openEnvelope('miss')" class="cursor-pointer group perspective-1000">
-                        <div class="relative bg-white p-8 rounded-t-lg shadow-xl border-b-4 border-love-200 transform transition group-hover:-translate-y-2">
-                            <div class="absolute top-0 left-0 w-full h-0 border-l-[150px] border-r-[150px] border-t-[100px] border-l-transparent border-r-transparent border-t-love-100/50"></div>
+                        <div class="relative bg-white p-8 rounded-t-lg shadow-xl border-b-4 border-rose-200 transform transition group-hover:-translate-y-2">
+                            <div class="absolute top-0 left-0 w-full h-0 border-l-[150px] border-r-[150px] border-t-[100px] border-l-transparent border-r-transparent border-t-rose-100/50"></div>
                             <div class="text-center mt-8">
                                 <div class="text-5xl mb-4 group-hover:scale-110 transition">🥺</div>
                                 <h3 class="font-bold text-gray-700">Open When...</h3>
-                                <p class="text-love-500 font-romantic text-xl">You Miss Me</p>
+                                <p class="text-rose-500 font-['Dancing_Script'] text-xl">You Miss Me</p>
                             </div>
                         </div>
                     </div>
@@ -435,7 +410,7 @@
                             <div class="text-center mt-8">
                                 <div class="text-5xl mb-4 group-hover:scale-110 transition">🧳</div>
                                 <h3 class="font-bold text-gray-700">Open On...</h3>
-                                <p class="text-blue-500 font-romantic text-xl">Feb 27th (Travel Day)</p>
+                                <p class="text-blue-500 font-['Dancing_Script'] text-xl">Feb 27th (Travel Day)</p>
                             </div>
                         </div>
                     </div>
@@ -445,7 +420,7 @@
                             <div class="text-center mt-8">
                                 <div class="text-5xl mb-4 group-hover:scale-110 transition">💖</div>
                                 <h3 class="font-bold text-gray-700">Open When...</h3>
-                                <p class="text-purple-500 font-romantic text-xl">You Need a Smile</p>
+                                <p class="text-purple-500 font-['Dancing_Script'] text-xl">You Need a Smile</p>
                             </div>
                         </div>
                     </div>
@@ -459,7 +434,7 @@
             </div>
 
             <section class="w-full max-w-lg mx-auto py-20 px-6 text-center">
-                <h2 class="text-3xl font-romantic text-love-900 mb-2">Security Check 🔒</h2>
+                <h2 class="text-3xl font-['Dancing_Script'] text-rose-900 mb-2">Security Check 🔒</h2>
                 <p class="text-gray-500 mb-8 text-sm">Only my true soulmate can access this section.</p>
                 <div class="relative group">
                     <div id="scanner-container" class="w-32 h-32 mx-auto bg-white/50 border-2 border-gray-300 rounded-2xl flex items-center justify-center cursor-pointer overflow-hidden relative shadow-inner transition-all duration-300" onmousedown="startScan()" onmouseup="stopScan()" onmouseleave="stopScan()" ontouchstart="startScan()" ontouchend="stopScan()">
@@ -489,21 +464,21 @@
                         </ul>
                     </div>
                     <div id="contract-stamp" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 hidden opacity-0 transform scale-150 transition-all duration-300">
-                        <div class="border-4 border-love-600 text-love-600 font-bold text-4xl p-4 rotate-[-20deg] opacity-80 rounded-lg">ACCEPTED ❤️</div>
+                        <div class="border-4 border-rose-600 text-rose-600 font-bold text-4xl p-4 rotate-[-20deg] opacity-80 rounded-lg">ACCEPTED ❤️</div>
                     </div>
                     <div class="mt-8 text-center">
-                        <button onclick="signContract()" id="sign-btn" class="bg-gray-800 text-white px-8 py-3 rounded-full font-bold hover:bg-love-600 transition shadow-lg w-full">🖊️ Click to Sign Here</button>
+                        <button onclick="signContract()" id="sign-btn" class="bg-gray-800 text-white px-8 py-3 rounded-full font-bold hover:bg-rose-600 transition shadow-lg w-full">🖊️ Click to Sign Here</button>
                     </div>
                     <p class="text-[10px] text-gray-400 text-center mt-4">Valid from Feb 28, 2026 to Eternity.</p>
                 </div>
             </section>
 
             <section class="w-full max-w-2xl mx-auto py-20 px-6">
-                <h2 class="text-3xl font-romantic text-center text-love-900 mb-8">The Source Code of My Heart 👨‍💻</h2>
+                <h2 class="text-3xl font-['Dancing_Script'] text-center text-rose-900 mb-8">The Source Code of My Heart 👨‍💻</h2>
                 <div class="bg-[#1e1e1e] rounded-xl shadow-2xl overflow-hidden border border-gray-700 transform hover:scale-[1.02] transition duration-500">
                     <div class="bg-[#252526] px-4 py-2 flex items-center space-x-2 border-b border-gray-700">
                         <div class="flex space-x-2 mr-4"><div class="w-3 h-3 rounded-full bg-red-500"></div><div class="w-3 h-3 rounded-full bg-yellow-500"></div><div class="w-3 h-3 rounded-full bg-green-500"></div></div>
-                        <div class="bg-[#1e1e1e] text-white text-xs px-3 py-1 rounded-t-md flex items-center border-t-2 border-love-500"><span class="mr-2">📝</span> love_logic.js</div>
+                        <div class="bg-[#1e1e1e] text-white text-xs px-3 py-1 rounded-t-md flex items-center border-t-2 border-rose-500"><span class="mr-2">📝</span> love_logic.js</div>
                     </div>
                     <div class="p-6 font-mono text-sm md:text-base leading-relaxed overflow-x-auto">
                         <div class="text-gray-500 italic mb-2">// Author: Nishandh (Full Stack Dev)<br>// Deploying to: Kokila's Heart ❤️</div>
@@ -515,7 +490,7 @@
                         <div class="flex"><span class="text-gray-600 mr-4 select-none">6</span><div class="pl-4"><span class="text-blue-400">distance</span> <span class="text-white">=</span> <span class="text-orange-400">450km</span>;</div></div>
                         <div class="flex"><span class="text-gray-600 mr-4 select-none">7</span><div class="pl-4"><span class="text-blue-400">happiness</span> <span class="text-white">=</span> <span class="text-purple-400">Infinity</span>;</div></div>
                         <div class="flex"><span class="text-gray-600 mr-4 select-none">8</span><div>}</div></div>
-                        <div class="flex mt-2"><span class="text-gray-600 mr-4 select-none">9</span><div class="w-2 h-5 bg-love-500 animate-pulse-slow"></div></div>
+                        <div class="flex mt-2"><span class="text-gray-600 mr-4 select-none">9</span><div class="w-2 h-5 bg-rose-500 animate-pulse-slow"></div></div>
                     </div>
                 </div>
             </section>
@@ -523,8 +498,8 @@
         </main>
     </div>
 
-    <footer class="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md py-8 text-center border-t border-love-200">
-        <p class="font-romantic text-xl text-love-900">Created with ❤️ by Nishandh</p>
+    <footer class="bg-white/80 dark:bg-gray-900/80 backdrop-blur-md py-8 text-center border-t border-rose-200">
+        <p class="font-['Dancing_Script'] text-xl text-rose-900">Created with ❤️ by Nishandh</p>
         <p class="text-xs text-gray-500 mt-2">See you in Coimbatore | Feb 28, 2026</p>
     </footer>
 
